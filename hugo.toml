@@ -1,3 +1,44 @@
-baseURL = 'https://example.org/'
+# See https://themes.gohugo.io/themes/not-much/
+
+baseURL = 'https://alexanderkaempf.github.io/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'Alexander Kaempf'
+theme = 'not-much'
+
+# Additional settings, see theme info
+
+[params]
+theme = "light"      # auto, light, dark
+palette = "default" # Dracula, Catpuccin, default
+
+# Menu
+
+[[menu.main]]
+  identifier = "home"
+  name = "home"
+  title = "Home"
+  url = "/"
+  weight = 1
+
+[[menu.main]]
+  identifier = "about"
+  name = "about"
+  title = "About"
+  url = "/about"
+  weight = 2
+
+[[menu.main]]
+  identifier = "posts"
+  name = "posts"
+  title = "Posts"
+  url = "/posts"
+  weight = 3
+
+[[menu.main]]
+  identifier = "github"
+  name = "github"
+  title = "GitHub"
+  url = "https://github.com/alexanderkaempf"
+  weight = 4
+  
+  
