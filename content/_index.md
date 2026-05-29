@@ -2,6 +2,6 @@
 lead: "Maths and Physics"
 ---
 
-This is a demo of the `not-much` theme, built with Hugo, and is intended to be trouble-free. Explore it to see what `not-much` has to offer.
+For tutoring or professional enquiries, feel free to shoot me an email!
 
 💡 Check the [about page](./about) to learn more about this theme.
