@@ -2,7 +2,7 @@
 
 baseURL = 'https://alexanderkaempf.github.io/'
 languageCode = 'en-us'
-title = 'Alexander Kaempf'
+title = 'Alexander Kaempf!'
 theme = 'not-much'
 
 # Additional settings, see theme info
