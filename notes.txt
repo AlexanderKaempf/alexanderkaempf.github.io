@@ -1,0 +1,23 @@
+Make changes:
+- edit md files
+- create new posts in the posts directory (both EN and DE), observing frontmatter
+
+To test changes:
+- cobalt serve
+- leaving running in a separate tab or window
+- browser to http://localhost:1024
+- to stop test server: hit Ctrl+C
+
+To rebuild site after making changes:
+- ./BUILD
+- or: cobalt build -d ./docs
+- this places rebuilt site into the docs directory
+
+To make visible online:
+- add any new pages you have created: git add posts/mynewfile.md, etc.
+- to check: git status (unadded files will still be in red, add them, they will be green)
+- commit your changes: git commit -a -m "message explaining changes"
+- send changes to GitHub: git push
+- you can do multiple commits, only push when you are ready
+- new changes should appear online
+
