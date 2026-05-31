@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My first post · Alexander Kaempf</title>
+    <meta name="description" content="How the eigenvalues of a graph's Laplacian quietly encode its shape, its bottlenecks, and how it connects.">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="Alexander Kaempf" href="/rss.xml">
+    <!-- MathJax: typeset LaTeX in posts, e.g. \( e^{i\pi}+1=0 \) -->
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+        options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="bar">
+        <a class="brand" href="/">Alexander Kaempf</a>
+        <nav class="menu"><a href="/" >Home</a>
+          <a href="/about/" >About</a>
+          <a href="/posts/" class="active">Posts</a>
+          <a href="/contact/" >Contact</a>
+          <a class="lang" href="/de/posts/spektralgraphen/" hreflang="de" title="Auf Deutsch lesen">DE</a></nav>
+      </div>
+    </header>
+
+    <main class="content"><article class="post">
+        <header class="post-head">
+          <h1>My first post</h1>
+          <p class="post-meta">
+            <time datetime="2026-04-08">April 8, 2026</time><span class="tag-list"><a class="tag" href="/tags/#graph-theory">graph-theory</a><a class="tag" href="/tags/#linear-algebra">linear-algebra</a><a class="tag" href="/tags/#exposition">exposition</a></span></p>
+        </header>
+        <p>Take a graph — vertices joined by edges — and build its Laplacian matrix
+$L = D - A$, where $D$ is the diagonal degree matrix and $A$ the adjacency
+matrix. The eigenvalues of $L$,</p>
+<p>$
+0 = \lambda_1 \le \lambda_2 \le \cdots \le \lambda_n ,
+$</p>
+<p>turn out to know a remarkable amount about the graph.</p>
+<h2>The second eigenvalue tells a story</h2>
+<p>The multiplicity of $\lambda_1 = 0$ counts the connected components. But the
+real protagonist is $\lambda_2$, the <strong>algebraic connectivity</strong>. When it is
+small, the graph has a bottleneck — it can be cut into two large pieces by
+removing few edges. When it is large, the graph is robustly woven together.</p>
+<p>This is the discrete cousin of an idea from geometry: the lowest vibration
+frequency of a drum reflects its shape. Here the "drum" is a network, and its
+frequencies are eigenvalues.</p>
+<h2>Why it pairs with number theory</h2>
+<p>In <a href="/posts/prime-gaps/">the previous note</a> I wrote about prime gaps. The link is
+spiritual rather than literal: in both cases a single spectrum — of primes, of a
+matrix — compresses an enormous amount of structure into a list of numbers. Much
+of my work is about learning to read those lists.</p>
+
+      </article></main>
+
+    <footer class="site-footer">
+      <div class="bar">
+        <span>© Alexander Kaempf</span>
+        <span class="dim">Built with Cobalt.</span>
+      </div>
+    </footer>
+  </body>
+</html>
