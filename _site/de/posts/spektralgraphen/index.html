@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Eine Notiz zur Spektralgraphentheorie · Alexander Kaempf</title>
+    <meta name="description" content="Wie die Eigenwerte des Laplace-Operators eines Graphen still seine Gestalt, seine Engstellen und seinen Zusammenhalt verschlüsseln.">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="Alexander Kaempf" href="/rss.xml">
+    <!-- MathJax: typeset LaTeX in posts, e.g. \( e^{i\pi}+1=0 \) -->
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+        options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="bar">
+        <a class="brand" href="/de/">Alexander Kaempf</a>
+        <nav class="menu"><a href="/de/" >Start</a>
+          <a href="/de/about/" >Über mich</a>
+          <a href="/de/posts/" class="active">Beiträge</a>
+          <a href="/de/contact/" >Kontakt</a>
+          <a class="lang" href="/posts/spectral-graphs/" hreflang="en" title="Read in English">EN</a></nav>
+      </div>
+    </header>
+
+    <main class="content"><article class="post">
+        <header class="post-head">
+          <h1>Eine Notiz zur Spektralgraphentheorie</h1>
+          <p class="post-meta">
+            <time datetime="2026-04-08">08.04.2026</time><span class="tag-list"><a class="tag" href="/de/tags/#graphentheorie">graphentheorie</a><a class="tag" href="/de/tags/#lineare-algebra">lineare-algebra</a><a class="tag" href="/de/tags/#darstellung">darstellung</a></span></p>
+        </header>
+        <p>Man nehme einen Graphen — Knoten, durch Kanten verbunden — und bilde seine
+Laplace-Matrix $L = D - A$, wobei $D$ die diagonale Gradmatrix und $A$ die
+Adjazenzmatrix ist. Die Eigenwerte von $L$,</p>
+<p>[
+0 = \lambda_1 \le \lambda_2 \le \cdots \le \lambda_n ,
+]</p>
+<p>wissen erstaunlich viel über den Graphen.</p>
+<h2>Der zweite Eigenwert erzählt eine Geschichte</h2>
+<p>Die Vielfachheit von $\lambda_1 = 0$ zählt die Zusammenhangskomponenten. Doch
+die eigentliche Hauptfigur ist $\lambda_2$, die <strong>algebraische Konnektivität</strong>.
+Ist sie klein, hat der Graph eine Engstelle — er lässt sich durch das Entfernen
+weniger Kanten in zwei große Teile zerschneiden. Ist sie groß, ist der Graph
+robust verwoben.</p>
+<p>Das ist der diskrete Vetter einer Idee aus der Geometrie: Die tiefste
+Schwingungsfrequenz einer Trommel spiegelt ihre Form wider. Hier ist die
+„Trommel" ein Netzwerk, und ihre Frequenzen sind Eigenwerte.</p>
+<h2>Warum es zur Zahlentheorie passt</h2>
+<p>In <a href="/de/posts/primzahlluecken/">der vorigen Notiz</a> schrieb ich über
+Primzahllücken. Die Verbindung ist eher geistiger als wörtlicher Natur: In
+beiden Fällen verdichtet ein einziges Spektrum — von Primzahlen, von einer
+Matrix — eine enorme Menge an Struktur in eine Liste von Zahlen. Ein großer Teil
+meiner Arbeit besteht darin, solche Listen lesen zu lernen.</p>
+
+      </article></main>
+
+    <footer class="site-footer">
+      <div class="bar">
+        <span>© Alexander Kaempf</span>
+        <span class="dim">Erstellt mit Cobalt.</span>
+      </div>
+    </footer>
+  </body>
+</html>

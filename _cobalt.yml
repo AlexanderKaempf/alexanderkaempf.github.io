@@ -1,0 +1,20 @@
+site:
+  title: Alexander Kaempf
+  description: Mathematician — research, notes, and writing on analysis and number theory.
+  base_url: http://localhost:1027
+
+# Every Markdown/Liquid page uses the master layout by default.
+pages:
+  default:
+    layout: default.liquid
+
+# Blog posts collection.
+posts:
+  title: Posts
+  description: Notes and essays.
+  dir: posts
+  order: Desc
+  rss: rss.xml
+  default:
+    layout: default.liquid
+    permalink: "/posts/{{ slug }}/"
