@@ -1,5 +1,5 @@
 ---
-title: A Note on Spectral Graph Theory
+title: My first post
 published_date: 2026-04-08 09:00:00 +0000
 description: How the eigenvalues of a graph's Laplacian quietly encode its shape, its bottlenecks, and how it connects.
 tags:
@@ -16,9 +16,9 @@ Take a graph — vertices joined by edges — and build its Laplacian matrix
 $L = D - A$, where $D$ is the diagonal degree matrix and $A$ the adjacency
 matrix. The eigenvalues of $L$,
 
-\[
+$
 0 = \lambda_1 \le \lambda_2 \le \cdots \le \lambda_n ,
-\]
+$
 
 turn out to know a remarkable amount about the graph.
 
