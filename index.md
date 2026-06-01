@@ -11,13 +11,9 @@ data:
   <img class="portrait" src="/assets/img/portrait.svg" alt="Portrait of Dr. Alexander Kaempf" width="168" height="168">
   <div class="intro-text">
     <p class="eyebrow">Mathematician</p>
-    <h1>Dr. Alexander Kaempf</h1>
+    <h1>Alexander Kaempf</h1>
     <p>
-      I am a cool mathematician working in analytic number theory and spectral graph
-      theory. My research explores the distribution of prime numbers, the
-      eigenvalue geometry of large networks, and the quiet bridges between the
-      two. This site collects my notes, essays, and occasional thoughts on
-      teaching and the craft of doing mathematics.
+	I am a mathematics and physics student currently living in Munich, Germany.
     </p>
   </div>
 </section>

@@ -15,9 +15,20 @@ To rebuild site after making changes:
 
 To make visible online:
 - add any new pages you have created: git add posts/mynewfile.md, etc.
+- also add new pages from the build directory: git add docs/mynewfile/, etc.
 - to check: git status (unadded files will still be in red, add them, they will be green)
 - commit your changes: git commit -a -m "message explaining changes"
 - send changes to GitHub: git push
 - you can do multiple commits, only push when you are ready
 - new changes should appear online
+
+Basic workflow
+1. make your adds/changes
+2. test locally with cobalt serve
+3. ./BUILD to rebuild static site
+4. git status to see new files
+5. git add to add new files
+6. git status again to check
+7. git commit to add to repo
+8. git push to upload changes and update site
 
