@@ -9,7 +9,7 @@ data:
 
 # Beiträge
 
-Notizen und Essays über Zahlentheorie, Graphen und die Praxis der Mathematik.
+Ich habe vor, alle meine Posts, die ich zuerst auf Englisch schreibe, ins Deutsche zu übersetzen und hier hochzuladen. Bis das aber passiert ist, muss ich auf die englische Version dieser Seite verweisen, die Sie mithilfe des Buttons oben rechts erreichen können.
 
 <ul class="post-list">
 {%- for post in collections.posts.pages -%}

@@ -1,0 +1,164 @@
+---
+title: Density Matrices and the State Space
+published_date: 2026-06-02 09:00:00 +0000
+description: A better notion of a quantum state than the wave function.
+tags:
+  - quantum-information
+  - density-matrices
+  - exposition
+data:
+  lang: en
+  nav: posts
+  alt_url: /de/posts/dichtematrizen/
+---
+
+This is the first post in a series on quantum information theory. Coming from a pure maths/physics student, prerequisites are assumed only in undergraduate level analysis, functional analysis, linear algebra, and perhaps operator algebra (although that will be explained along the way), and not in any prior quantum information theory. An advantage of this is that we can build the subject up rigorously from the bottom, omitting the hand-wavy arguments often present in quantum theory texts. In my opinion, this is a much more satisfying way to learn about a technical topic and it leads to a deeper level of understanding.
+
+It is worth mentioning, that these posts are based on the accompanying notes of a series of talks and therefore more in a dry textbook style than would be typical for a blog post. Hopefully this can be counterbalanced by other posts on this blog!
+
+Also worth mentioning: These posts mainly draw from "Quantum Theory for mathematicians" by Brian Hall and the four-volume series "Methods of Modern Mathematical Physics" by Simon/Reeds. If other literature is used, it will be explicitly cited.
+## Motivation
+
+In introductory texts, a quantum state is usually associated with a (unit) vector in a suitable Hilbert space $H$. This description, however, is incomplete and contains redundancies, as will become apparent below. The density matrix formalism offers a mathematically cleaner and more general approach.
+
+## Preliminary definitions
+
+**Definition 1.**
+A linear map $\Phi : B(H) \to \mathbb{C}$ is called a *family of expectation values* if the following conditions hold:
+
+1. $\Phi(I) = 1$.
+2. $\Phi(A)$ is real whenever $A$ is self-adjoint.
+3. $\Phi(A) \geq 0$ whenever $A$ is self-adjoint and non-negative.
+4. For any sequence $(A_n)$ in $B(H)$,
+$$\|A_n \psi - A \psi\| \to 0 \quad \forall \psi \in H \implies \Phi(A_n) \to \Phi(A).$$
+
+**Example:** $\Phi_\psi : B(H) \rightarrow \mathbb{C},\quad \Phi_\psi(A) = \langle\psi, A\psi\rangle$ (the expectation value of an operator).
+
+**Observation:** $\Phi_\psi = \Phi_{\psi'} \Leftrightarrow \exists\,\theta\in[0, 2\pi)$ with $\psi = e^{i\theta} \psi'$ ($\psi, \psi'$ both unit vectors).
+
+**Proof.** "$\Leftarrow$": direct calculation. "$\Rightarrow$": Let $P_v = v\langle v, \cdot\rangle$ denote the orthogonal projection onto $v\in H$. This is a linear bounded operator, from which follows:
+$$1 = \Phi_\psi(P_\psi) = \Phi_{\psi'}(P_{\psi}) = |\langle\psi, \psi'\rangle|^2 \implies |\langle\psi, \psi'\rangle|=1=\|\psi\|\,\|\psi'\|.$$
+Because we now have equality in the Cauchy–Schwarz inequality, and $\psi$ and $\psi'$ have equal magnitude, it follows that $\psi = e^{i\theta} \psi'$, with $\theta\in[0, 2\pi)$. $\square$
+
+This means that wave functions are determined by the expectation values of observables exactly up to the equivalence classes $\psi \sim \psi' :\Leftrightarrow \exists\,\theta\in [0, 2\pi): \psi = e^{i\theta}\psi'$, which represent unique states. The density matrix formalism avoids this redundancy (see **Proposition 2**).
+
+**Definition 2.** Let $A$ be a non-negative, self-adjoint operator on $H$. Then, for any choice of orthonormal basis $\{e_j\}$, we define
+$$\sum_{j} \langle e_{j}, A e_{j}\rangle =: \operatorname{tr}(A).$$
+If $\operatorname{tr}(A) < \infty$, $A$ is called **trace class**.
+
+**Definition 3.** An operator $\rho \in B(H)$ is a **density matrix** if $\rho$ is self-adjoint, non-negative, and has trace 1.
+
+## The density matrix formalism
+
+**Proposition 1.**
+Suppose $\rho$ is a density matrix on $H$. Then the map
+$$\Phi_{\rho}:B(H)\to\mathbb{C}, \qquad \Phi_{\rho}(A)=\operatorname{tr}(\rho A)$$
+is a family of expectation values.
+
+**Proof.** Hall, page 424. $\square$
+
+**Proposition 2.**
+For any family of expectation values $\Phi : B(H) \to \mathbb{C}$, there is a unique density matrix $\rho$ such that
+$$\Phi(A)=\operatorname{tr}(\rho A) \qquad \text{for all } A \in B(H).$$
+
+**Proof.** Hall, page 424–425 (plus many lemmas...). $\square$
+
+The two propositions together are the core of the formalism: families of expectation values and density matrices are the same data. Note that the redundancy observed after **Definition 1** has been removed.
+
+**Proposition 3.**
+For any unit vector $\psi \in H$, let $\psi\langle\psi, \cdot \rangle$ denote the orthogonal projection onto the span of $\psi$. Then $\psi\langle\psi, \cdot \rangle$ is a density matrix, and for all $A \in B(H)$,
+$$\operatorname{tr}(\psi \langle\psi, A\,\cdot \rangle)=\langle \psi, A\psi\rangle.$$
+
+**Proof.** As an orthogonal projection, $\psi\langle\psi, \cdot\rangle$ is bounded, self-adjoint, and non-negative. Choose an orthonormal basis $\{e_j\}$ of $H$ with $e_1=\psi$. This gives us
+$$\operatorname{tr}(\psi\langle\psi, \cdot\rangle) = \sum_j|\langle\psi, e_j\rangle|^2= \sum_j\delta_{1j}^2 = 1$$
+and, for any $A \in B(H)$:
+$$\operatorname{tr}(\psi \langle\psi, A\,\cdot \rangle) = \sum_j \langle\psi, e_j\rangle\langle\psi, Ae_j\rangle = \sum_j\delta_{1j}\langle\psi, Ae_j\rangle = \langle\psi, A\psi\rangle. \quad\square$$
+
+So the old description embeds into the new one: every unit vector gives a density matrix, and the two assign the same expectation values. The converse fails, and that failure is the entire content of the next section.
+
+## Mixed vs. pure states
+
+**Definition 4.**
+A density matrix $\rho \in B(H)$ is a **pure state** if there exists a unit vector $\psi \in H$ such that $\rho = \psi\langle\psi, \cdot\rangle$. The density matrix $\rho$ is called a **mixed state** if no such unit vector $\psi$ exists.
+
+**Proposition 4.** A density matrix $\rho \in B(H)$ is a pure state if and only if $\operatorname{tr}(\rho^2) = 1$. All density matrices satisfy $\operatorname{tr}(\rho^2) \leq 1$.
+
+**Proof.** "$\Rightarrow$": Given a unit vector $\psi$ such that $\rho = \psi\langle\psi, \cdot\rangle$, we obtain
+$$\rho^2 = \psi\langle\psi, \psi\langle\psi, \cdot \rangle \rangle = \psi\langle\psi, \cdot\rangle\langle\psi, \psi \rangle = \psi\langle\psi, \cdot \rangle = \rho,$$
+$$\implies \operatorname{tr}(\rho^2) = \operatorname{tr}(\rho) = 1.$$
+
+"$\Leftarrow$": For this implication we use the **Hilbert–Schmidt theorem** (Reed–Simon, Volume 1, Theorem VI.16). $\rho$ is both self-adjoint and trace-class, thus compact (Reed–Simon, Volume 1, Theorem VI.21). Therefore, there exists a complete orthonormal basis $\{e_j\}$ of $H$ and eigenvalues $\{\lambda_j\}$ with $0 \leq\lambda_j \leq 1$ such that
+$$\rho\, e_j = \lambda_j e_j \quad \forall j \in \mathbb{N}.$$
+From this we conclude for the operator $\rho^2$:
+$$\rho^2 e_j = \lambda^2_j e_j \quad \forall j \in \mathbb{N}.$$
+Theorem VI.17 from the same textbook also tells us that we can write $\rho$ in the form
+$$\rho = \sum_j\lambda_j\, e_j\langle e_j, \cdot\rangle.$$
+From **Definition 2** it follows that:
+$$\operatorname{tr}(\rho^2) = \sum_j\langle e_j, \rho^2 e_j\rangle = \sum_j\lambda_j^2 \leq \sup_j\lambda_j\sum_i\lambda_i = \sup_j\lambda_j\cdot\operatorname{tr}(\rho) = \sup_j\lambda_j \leq 1.$$
+In the case of equality, it follows that $\sup_j\lambda_j = 1$, and because $\sum_j\lambda_j=1$ there exists an $i\in\mathbb{N}$ with $\lambda_i=1$ and $\lambda_j = 0$ for $j \neq i$. This means that $\rho$ can be written as
+$$\rho = e_i\langle e_i, \cdot\rangle,$$
+i.e. $\rho$ is the orthogonal projection onto a unit vector, thus a pure state. $\square$
+
+**Proposition 5.** The set of density matrices is convex. A density matrix $\rho$ is a pure state if and only if: $\rho = \lambda \rho_1 + (1-\lambda)\rho_2$, with $\rho_1, \rho_2$ distinct density matrices and $\lambda \in [0, 1]$, implies $\lambda \in \{0, 1\}$ — i.e. $\rho$ is an extremal point.
+
+**Proof.**
+*$\rho$ is a density matrix:* Self-adjointness and non-negativity are both additive, and furthermore
+$$\operatorname{tr}(\rho) = \lambda\operatorname{tr}(\rho_1) + (1-\lambda)\operatorname{tr}(\rho_2) = \lambda + (1-\lambda) = 1.$$
+
+*Extremal property.*
+
+"$\Rightarrow$": Because $\rho$ is pure, there exists a unit vector $\psi$ with $\rho = \psi \langle\psi, \cdot \rangle$. For any $\phi \in \psi^\perp$,
+$$\langle\phi, \rho\phi \rangle = \lambda \langle\phi, \rho_1\phi\rangle + (1-\lambda)\langle\phi, \rho_2\phi\rangle = 0.$$
+From non-negativity it follows that $\langle\phi, \rho_1\phi\rangle = \langle\phi, \rho_2\phi\rangle = 0$, and using non-negativity and self-adjointness (Reed–Simon, Volume 1, Theorem VI.9):
+$$0 = \langle\phi, \rho_1^{1/2}\rho_1^{1/2}\phi\rangle=\|\rho_1^{1/2}\phi\|^2 \implies \rho_1\phi=\rho_1^{1/2}(\rho_1^{1/2}\phi) = 0.$$
+The same applies to $\rho_2$. It follows that
+$$\psi^\perp \subseteq \ker(\rho_1) \implies \operatorname{im}(\rho_1) \subseteq \operatorname{span}(\psi).$$
+From this we conclude that $\rho_1 = \psi\, f(\cdot)$. Since $\rho_1$ is linear and bounded, so is $f$, and the Riesz representation theorem gives us $f(\cdot)=\langle\xi, \cdot\rangle$ for some $\xi \in H$. The self-adjointness of $\rho_1$ then forces
+$$\psi\langle\xi, \cdot\rangle = \xi\langle\psi, \cdot\rangle \implies \xi \sim \psi.$$
+We now know that $\rho_1$ is a scalar multiple of $\rho$. The condition $\operatorname{tr}(\rho_1)=1$ forces $\rho_1=\rho$ and therefore $\lambda=1$.
+
+"$\Leftarrow$": We prove the contrapositive, i.e. [$\rho$ not pure] $\Rightarrow$ [$\rho$ not extremal]. Using Hilbert–Schmidt again, our assumption gives us a complete orthonormal basis $\{e_j\}$ of eigenvectors of $\rho$ with at least two positive eigenvalues $\lambda_1, \lambda_2$. Choosing $\epsilon$ with $0 < \epsilon \leq \min(\lambda_1, \lambda_2)$, we define the operators
+$$\rho_\pm := \rho \pm \epsilon\bigl(e_1\langle e_1, \cdot\rangle - e_2\langle e_2, \cdot\rangle\bigr).$$
+These are density matrices: self-adjointness and the trace property are clear, and our choice of $\epsilon$ guarantees non-negative eigenvalues and therefore non-negativity of $\rho_\pm$. Then $\rho$ can be written as
+$$\rho = \tfrac{1}{2}\rho_+ + \tfrac{1}{2}\rho_-,$$
+from which it follows that $\rho$ is not extremal. $\square$
+
+At this point it is worth distinguishing between linear combinations of unit vectors (wave functions) and density matrices. Given $c_1, c_2 \in \mathbb{C}$ and two wave functions $\psi_1, \psi_2$, the combination $c_1\psi_1 + c_2\psi_2$, once normalized, is again a wave function. This type of linear combination is called a *coherent* or *quantum superposition*. Note that a coherent superposition depends on the phase (complex amplitude) of the unit vectors — this is what leads to effects like interference.
+
+The density matrix of a coherent superposition is not the same as a linear combination of the corresponding density matrices:
+$$(c_1\psi_1+c_2\psi_2)\langle c_1\psi_1+c_2\psi_2, \cdot \rangle \neq |c_1|^2\psi_1\langle\psi_1, \cdot\rangle+|c_2|^2\psi_2\langle\psi_2,\cdot\rangle,$$
+where on the right $c_1, c_2$ must now be real, non-negative, and sum to 1. The right-hand side is an *incoherent superposition*, which results in a mixed state (as follows from what we just proved). Here the phases have no effect, but expectation values of observables are additive:
+$$\operatorname{tr}\!\bigl(|c_1|^2\psi_1\langle\psi_1, A\,\cdot\rangle+|c_2|^2\psi_2\langle\psi_2, A\,\cdot\rangle\bigr) = |c_1|^2\langle\psi_1, A\psi_1\rangle + |c_2|^2\langle\psi_2, A\psi_2\rangle.$$
+
+## Example: the qubit and the Bloch sphere
+
+In this section, $H = \mathbb{C}^2$, equipped with the standard inner product.
+
+**Definition 5.** A **qubit** is a density matrix $\rho \in B(\mathbb{C}^2)$, i.e. a $2\times 2$ matrix
+$$\rho = \begin{pmatrix} a & b+ic \\ b-ic & 1-a \end{pmatrix}, \qquad a, b, c \in \mathbb{R},\quad a\in [0, 1],\quad \det(\rho) \geq 0.$$
+This explicit representation makes clear that qubits form a convex subset of the Hermitian non-negative matrices in $\mathbb{C}^{2\times 2}$.
+
+The wave functions corresponding to pure qubits are the unit vectors in $\mathbb{C}^2$, i.e. vectors of the form
+$$\begin{bmatrix} \alpha \\ \beta \end{bmatrix}, \qquad |\alpha|^2 + |\beta|^2 = 1,$$
+and their density matrices are projections onto the span of the unit vector.
+
+**Lemma.** Every qubit can be written uniquely as a linear combination of the Pauli spin matrices $\sigma_1, \sigma_2, \sigma_3$ together with the identity matrix.
+
+**Proof.** These matrices are obviously linearly independent. For $a, b, c \in \mathbb{R}$ with $a \in [0,1]$, it is easy to verify:
+$$\begin{pmatrix} a & b+ic \\ b-ic & 1-a \end{pmatrix} = \frac{1}{2}\cdot\mathbb{I} + b\cdot\sigma_1 - c\cdot\sigma_2 + \frac{2a-1}{2}\cdot\sigma_3.$$
+Since $\operatorname{tr}(\cdot)$ is linear and all Pauli matrices have trace 0, the set of qubits can be parameterized as
+$$\rho = \frac{1}{2}\!\left(\mathbb{I} + \sum_{j=1}^{3}s_j\cdot\sigma_j\right).$$
+The uniquely determined vector $s = (s_1, s_2, s_3)^T$ is the **Bloch vector**. $\square$
+
+We now relate $\operatorname{tr}(\rho^2)$ to the magnitude of $s$:
+$$\rho^2_{00} = \frac{1}{4} \begin{bmatrix} 1+s_3 & s_1-is_2 \end{bmatrix} \begin{bmatrix} 1+s_3 \\ s_1+is_2 \end{bmatrix} = \frac{1}{4}(1+s_3+|s|^2),$$
+$$\rho^2_{11} = \frac{1}{4} \begin{bmatrix} s_1+is_2 & 1-s_3 \end{bmatrix} \begin{bmatrix} s_1-is_2 \\ 1-s_3 \end{bmatrix} = \frac{1}{4}(1-s_3+|s|^2),$$
+$$\implies \operatorname{tr}(\rho^2) = \frac{1}{2}(1 + |s|^2).$$
+
+From **Proposition 4** we conclude that the Bloch vector lies within the unit sphere (hence the name "Bloch sphere"), and pure states live on the boundary. This is also consistent with **Proposition 5**: the unit ball is a convex set whose extremal points are exactly its boundary.
+
+## Outlook to the next chapters
+
+We introduced mixed states as the density matrices that fail to be projections, and **Proposition 5** placed them in the interior of the state space. So far this is a generalization in search of a reason — nothing yet *forces* us to consider a state that is not pure; one could read the whole formalism as bookkeeping for classical ignorance about which pure state we hold.
+
+However, once we allow two systems to share a Hilbert space, and then agree to look at only one of them, mixedness stops being optional. The most innocent pure state of the pair will hand us a mixed state on each part, with no ignorance anywhere in sight. Ignorance, it will turn out, is not the only road to a mixed state. Entanglement is the other, and it is the more interesting one.
