@@ -2,8 +2,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Composite Systems and the Partial Trace · Alexander Kaempf</title>
-    <meta name="description" content="How joining two systems and then forgetting one of them forces mixed states upon us, with no appeal to ignorance.">
+    <title>QIT 2 - Composite Systems and the Partial Trace · Alexander Kaempf</title>
+    <meta name="description" content="Mixed states appear when "joining" two states">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="alternate" type="application/rss+xml" title="Alexander Kaempf" href="/rss.xml">
     <!-- MathJax: typeset LaTeX in posts, e.g. \( e^{i\pi}+1=0 \) -->
@@ -29,11 +29,11 @@
 
     <main class="content"><article class="post">
         <header class="post-head">
-          <h1>Composite Systems and the Partial Trace</h1>
+          <h1>QIT 2 - Composite Systems and the Partial Trace</h1>
           <p class="post-meta">
-            <time datetime="2026-06-09">June 9, 2026</time><span class="tag-list"><a class="tag" href="/tags/#quantum-information">quantum-information</a><a class="tag" href="/tags/#density-matrices">density-matrices</a><a class="tag" href="/tags/#entanglement">entanglement</a></span></p>
+            <time datetime="2025-10-09">October 9, 2025</time><span class="tag-list"><a class="tag" href="/tags/#quantum-information">quantum-information</a><a class="tag" href="/tags/#density-matrices">density-matrices</a><a class="tag" href="/tags/#entanglement">entanglement</a></span></p>
         </header>
-        <p>In the <a href="/posts/density-matrices/">previous post</a> we replaced the unit vector by the density matrix and found, sitting in the interior of the state space, the mixed states. I promised that they were not a mere generalization, and that a reason to take them seriously would arrive once we considered more than one system at a time. This is that post.</p>
+        <p>In the <a href="/posts/density-matrices/">previous post</a> we replaced the unit vector by the density matrix and found, in the interior of the state space, the mixed states. At that point, the existence of mixed states was only a mathematical property of our new model. In this post, we will see how mixed states arise by "joining" two quantum systems together.</p>
 <p>The setting is two quantum systems, $A$ and $B$, regarded as one. The mathematical object that joins them is the tensor product; the operation that lets us forget one of them is the partial trace; and the consequence — that a pure state of the whole can have a mixed state on each part — is the first genuinely quantum phenomenon we meet. Throughout, $H_A$ and $H_B$ are finite-dimensional Hilbert spaces, with orthonormal bases ${e_i}$ and ${f_j}$ respectively. The finite-dimensional restriction is a convenience, not a necessity, and I will flag where it is doing work.</p>
 <h2>The tensor product</h2>
 <p><strong>Definition 1.</strong> The <strong>composite system</strong> of $A$ and $B$ has Hilbert space $H_A \otimes H_B$, the tensor product, with the inner product determined on product vectors by

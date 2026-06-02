@@ -2,8 +2,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Entanglement and the Schmidt Decomposition · Alexander Kaempf</title>
-    <meta name="description" content="A canonical form for bipartite pure states that makes entanglement visible at a glance, and the awkward question of what to do about mixed states.">
+    <title>QIT 3 - Entanglement and the Schmidt Decomposition · Alexander Kaempf</title>
+    <meta name="description" content="A canonical form for bipartite pure states that makes entanglement immediately visible.">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="alternate" type="application/rss+xml" title="Alexander Kaempf" href="/rss.xml">
     <!-- MathJax: typeset LaTeX in posts, e.g. \( e^{i\pi}+1=0 \) -->
@@ -29,9 +29,9 @@
 
     <main class="content"><article class="post">
         <header class="post-head">
-          <h1>Entanglement and the Schmidt Decomposition</h1>
+          <h1>QIT 3 - Entanglement and the Schmidt Decomposition</h1>
           <p class="post-meta">
-            <time datetime="2026-06-16">June 16, 2026</time><span class="tag-list"><a class="tag" href="/tags/#quantum-information">quantum-information</a><a class="tag" href="/tags/#entanglement">entanglement</a><a class="tag" href="/tags/#exposition">exposition</a></span></p>
+            <time datetime="2026-01-16">January 16, 2026</time><span class="tag-list"><a class="tag" href="/tags/#quantum-information">quantum-information</a><a class="tag" href="/tags/#entanglement">entanglement</a><a class="tag" href="/tags/#exposition">exposition</a></span></p>
         </header>
         <p>The <a href="/posts/composite-systems/">last post</a> ended on a puzzle dressed as a computation: a pure state $\Psi$ of two qubits whose reduced state on each part was maximally mixed. The whole was sharp; the parts were maximally uncertain; the missing information lived in the correlations between them. We called such states entangled in passing and moved on. This post stops to do it properly.</p>
 <p>The central result is the <strong>Schmidt decomposition</strong>, a structure theorem that puts every bipartite pure state into a canonical, nearly diagonal form. From that form, entanglement becomes a matter of counting: how many terms does the decomposition need? One term means a product state, more than one means entanglement, and the reduced density matrices of the previous post fall out as a free corollary. As before $H_A, H_B$ are finite-dimensional with orthonormal bases ${e_i}, {f_j}$; the finite-dimensionality genuinely matters here, since the proof runs through the singular value decomposition of a finite matrix.</p>
