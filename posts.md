@@ -9,7 +9,7 @@ data:
 
 # Posts
 
-Notes and essays on number theory, graphs, and the practice of mathematics.
+Various things
 
 <ul class="post-list">
 {%- for post in collections.posts.pages -%}

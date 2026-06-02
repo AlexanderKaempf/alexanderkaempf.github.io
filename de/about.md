@@ -9,33 +9,64 @@ data:
 
 # Über mich
 
-Ich bin **Dr. Elena Voss**, Mathematikerin am Institut für Mathematische
-Wissenschaften. Ich habe über die Feinstruktur der Primzahllücken promoviert,
-und meine derzeitige Arbeit liegt an der Schnittstelle von analytischer
-Zahlentheorie und Spektralgraphentheorie.
+Hallo, ich bin **Alexander Kaempf** — Mathematik- und Physikstudent in München. Mein Fokus liegt auf der Anwendung reiner Wissenschaft auf reale Probleme, mit besonderem Interesse an **Quantencomputing**, **Kryptographie** und **KI**. 
 
-## Forschungsinteressen
 
-- **Analytische Zahlentheorie** — die Verteilung der Primzahlen, Siebmethoden
-  und $L$-Funktionen.
-- **Spektralgraphentheorie** — was die Eigenwerte des Laplace-Operators eines
-  Graphen über seine globale Gestalt verraten.
-- **Mathematische Darstellung** — schwierige Ideen verständlich machen, ohne sie
-  zu verwässern.
+## Ausbildung
 
-## Eine Bemerkung zur Methode
+### B.Sc. Physik — Technische Universität München
+*Oktober 2024 – heute*
 
-> „Ein Mathematiker ist, wie ein Maler oder ein Dichter, ein Schöpfer von
-> Mustern." — G. H. Hardy
+- Aktueller Notendurchschnitt: 1,2 (Top 1% des Jahrgangs)
+- Kurse: Klassische Mechanik, Elektrodynamik, Optik, Quantenmechanik, Python
 
-Ich glaube, gute Mathematik lebt ebenso von der Klarheit wie vom Scharfsinn.
-Vieles, was ich hier schreibe, ist der Versuch, Ideen meinem früheren Ich zu
-erklären — jener Version, die sie mit einem besseren Bild schneller verstanden
-hätte.
+### B.Sc. Mathematik — Technische Universität München
+*Oktober 2024 – heute*
 
-## Abseits der Seite
+- Aktueller Notendurchschnitt: 1,2 (Top 2% des Jahrgangs)
+- Kurse: Analysis, Lineare Algebra, Algebra, Diskrete Mathematik, Wahrscheinlichkeitstheorie, Optimierung
 
-Wenn ich nicht an der Tafel stehe, wandere ich, spiele schlecht Cello oder lese
-über die Geschichte der Wissenschaft. Über Nachrichten von Studierenden,
-Mitarbeitenden und neugierigen Leserinnen und Lesern freue ich mich stets —
-siehe die [Kontaktseite](/de/contact/).
+### Abitur — Wilhelmsgymnasium München
+*Oktober 2018 – Juni 2024*
+
+- Abiturnote: 1,0 (Jahrgangsbester)
+- Schwerpunkt auf Kunst und Geisteswissenschaften; Latein und Altgriechisch erlernt
+- Aktive Teilnahme am schulischen Musikleben, u. a. als Soloviolinist bei mehreren Benefizkonzerten
+- 2018 von Nord-London nach München gezogen und hier Deutsch gelernt
+
+---
+
+## Laufende Projekte
+
+- **Vorlesungsreihe Quanteninformationstheorie** — Entwicklung einer mathematisch fundierten Vorlesungsreihe zur Quanteninformationstheorie (Vorlesungsunterlagen auf dieser Website)
+- **Persönlicher Blog** — Beiträge zu Quantencomputing, Informationstheorie und KI-gestützten Beweisen auf [alexanderkaempf.github.io](https://alexanderkaempf.github.io)
+
+---
+
+## Auszeichnungen & Außerschulisches
+
+- **DPG-Buchpreis 2024** der Deutschen Physikalischen Gesellschaft, verliehen für eine W-Seminar-Arbeit zur Tsunami-Simulation mit Hydrodynamik und numerischen Methoden
+- **Deutschlandstipendium** (Karl Max von Bauernfeind-Verein e.V.)
+- **Bayerischer U18-Rekordhalter** im Halbmarathon
+- **3. Platz** bei den deutschen U18-Meisterschaften 2023 über 3000 m; Mitglied der deutschen Leichtathletik-Nationalmannschaft 2023/2024
+- **2. Preis** beim Bundeswettbewerb „Jugend musiziert" (Violine)
+- Aktive Mitwirkung in mehreren Jugendorchestern, u. a. im British National Children's Orchestra und im Puchheimer Jugendkammerorchester
+
+---
+
+## Sprachen
+
+| Sprache        | Niveau         |
+|----------------|----------------|
+| Englisch       | Muttersprache  |
+| Deutsch        | Fließend       |
+| Altgriechisch  | Fortgeschritten|
+| Latein         | Fortgeschritten|
+| Python         | Fortgeschritten|
+| Julia          | Fortgeschritten|
+
+---
+
+## Interessen
+
+Geige spielen · Musik komponieren · Laufen · Boxen · Fantasy-Literatur lesen und schreiben · Neue Städte entdecken

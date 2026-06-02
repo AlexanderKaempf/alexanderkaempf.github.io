@@ -1,7 +1,7 @@
 ---
-title: Entanglement and the Schmidt Decomposition
-published_date: 2026-06-16 09:00:00 +0000
-description: A canonical form for bipartite pure states that makes entanglement visible at a glance, and the awkward question of what to do about mixed states.
+title: QIT 3 - Entanglement and the Schmidt Decomposition
+published_date: 2026-01-16 18:01:55 +0000
+description: A canonical form for bipartite pure states that makes entanglement immediately visible.
 tags:
   - quantum-information
   - entanglement

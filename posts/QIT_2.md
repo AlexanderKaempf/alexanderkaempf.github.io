@@ -1,7 +1,7 @@
 ---
-title: Composite Systems and the Partial Trace
-published_date: 2026-06-09 09:00:00 +0000
-description: How joining two systems and then forgetting one of them forces mixed states upon us, with no appeal to ignorance.
+title: QIT 2 - Composite Systems and the Partial Trace
+published_date: 2025-10-09 14:22:03 +0000
+description: Mixed states appear when "joining" two states
 tags:
   - quantum-information
   - density-matrices
@@ -12,7 +12,7 @@ data:
   alt_url: /de/posts/zusammengesetzte-systeme/
 ---
 
-In the [previous post](/posts/density-matrices/) we replaced the unit vector by the density matrix and found, sitting in the interior of the state space, the mixed states. I promised that they were not a mere generalization, and that a reason to take them seriously would arrive once we considered more than one system at a time. This is that post.
+In the [previous post](/posts/density-matrices/) we replaced the unit vector by the density matrix and found, in the interior of the state space, the mixed states. At that point, the existence of mixed states was only a mathematical property of our new model. In this post, we will see how mixed states arise by "joining" two quantum systems together.
 
 The setting is two quantum systems, $A$ and $B$, regarded as one. The mathematical object that joins them is the tensor product; the operation that lets us forget one of them is the partial trace; and the consequence — that a pure state of the whole can have a mixed state on each part — is the first genuinely quantum phenomenon we meet. Throughout, $H_A$ and $H_B$ are finite-dimensional Hilbert spaces, with orthonormal bases $\{e_i\}$ and $\{f_j\}$ respectively. The finite-dimensional restriction is a convenience, not a necessity, and I will flag where it is doing work.
 

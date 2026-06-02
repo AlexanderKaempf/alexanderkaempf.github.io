@@ -8,36 +8,31 @@ data:
 ---
 
 <section class="intro">
-  <img class="portrait" src="/assets/img/portrait.svg" alt="Porträt von Dr. Elena Voss" width="168" height="168">
+  <img class="portrait" src="/assets/img/alex.svg" alt="Porträt von Alexander Kaempf" width="168" height="168">
   <div class="intro-text">
-    <p class="eyebrow">Mathematikerin</p>
-    <h1>Dr. Elena Voss</h1>
+    <!-- <p class="eyebrow">Mathematician</p> -->
+    <h1>Alexander Kaempf</h1>
     <p>
-      Ich bin Mathematikerin und arbeite in der analytischen Zahlentheorie und
-      der Spektralgraphentheorie. Meine Forschung untersucht die Verteilung der
-      Primzahlen, die Eigenwert-Geometrie großer Netzwerke und die stillen
-      Brücken zwischen beiden. Auf dieser Seite sammle ich meine Notizen, Essays
-      und gelegentliche Gedanken zur Lehre und zum Handwerk der Mathematik.
+      Ich bin Mathematik- und Physikstudent an der TUM und lebe derzeit in München. Mit diesem persönlichen Blog möchte ich einige allgemeine Gedanken zu Themen teilen, die mich interessieren – etwa Musikkomposition, Schreiben und Philosophie. Außerdem schreibe ich über technische Themen, hauptsächlich aus den Bereichen reine Mathematik, mathematische Physik, Quanteninformationstheorie und KI.
+    </p>
+    <p>
+      Da ich noch nicht dazugekommen bin, die meisten Beiträge auf dieser Seite ins Deutsche zu übersetzen, empfehle ich, auf die englische Version zu wechseln. Dies können Sie machen, indem Sie den Button oben rechts betätigen.
     </p>
   </div>
 </section>
-
 <hr>
-
 ## Neueste Beiträge
-
 <ul class="post-list">
 {%- for post in collections.posts.pages -%}
   {%- if post.data.lang == "de" -%}
   <li>
-    <span class="date"><time datetime="{{ post.published_date | date: '%Y-%m-%d' }}">{{ post.published_date | date: "%d.%m.%Y" }}</time></span>
+    <span class="date"><time datetime="{{ post.published_date | date: '%Y-%m-%d' }}">{{ post.published_date | date: "%B %-d, %Y" }}</time></span>
     <h3><a href="/{{ post.permalink }}">{{ post.title }}</a></h3>
     {%- if post.tags -%}
-    <span class="tag-list">{%- for tag in post.tags -%}<a class="tag" href="/de/tags/#{{ tag }}">{{ tag }}</a>{%- endfor -%}</span>
+    <span class="tag-list">{%- for tag in post.tags -%}<a class="tag" href="/tags/#{{ tag }}">{{ tag }}</a>{%- endfor -%}</span>
     {%- endif -%}
   </li>
   {%- endif -%}
 {%- endfor -%}
 </ul>
-
-[Alle Beiträge →](/de/posts/)
+[Alle Beiträge →](/posts/)

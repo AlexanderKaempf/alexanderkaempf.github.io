@@ -10,10 +10,10 @@ data:
 <section class="intro">
   <img class="portrait" src="/assets/img/alex.svg" alt="Portrait of Alexander Kaempf" width="168" height="168">
   <div class="intro-text">
-    <p class="eyebrow">Mathematician</p>
+    <!-- <p class="eyebrow">Mathematician</p> -->
     <h1>Alexander Kaempf</h1>
     <p>
-	I am a mathematics and physics student at TUM currently living in Munich, Germany. This website is intended
+	I am a mathematics and physics student at TUM currently living in Munich, Germany. With this personal blog, I intend to share some general thoughts on topics which interest me, such as composing music, writing, and philosophy. I also write about technical topics, mainly in pure maths, mathematical physics, quantum information theory and AI.  
     </p>
   </div>
 </section>

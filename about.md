@@ -9,31 +9,61 @@ data:
 
 # About
 
-I am **Alexander Kaempf**, a mathematician based at the Institute for Mathematical
-Sciences. I completed my doctorate on the fine structure of prime gaps, and my
-current work sits at the intersection of analytic number theory and spectral
-graph theory.
+Hi, I'm **Alexander Kaempf** — a mathematics and physics student based in Munich, Germany. Academically, my main interests are quantum information theory, quantum computing and physics. I also love to composing music, playing violin and running. Here's my CV:
 
-## Research interests
 
-- **Analytic number theory** — the distribution of primes, sieve methods, and
-  $L$-functions.
-- **Spectral graph theory** — what the eigenvalues of a graph's Laplacian reveal
-  about its global shape.
-- **Mathematical exposition** — making difficult ideas legible without
-  diluting them.
+## Education
 
-## A note on method
+### B.Sc. Physics — Technical University of Munich
+*October 2024 – present*
 
-> "A mathematician, like a painter or a poet, is a maker of patterns."
-> — G. H. Hardy
+- Current grade: 1.2 (top 1% of year)
+- Courses include: Classical Mechanics, Electrodynamics, Optics, Quantum Mechanics, Python
 
-I believe good mathematics is as much about clarity as it is about cleverness.
-Much of what I write here is an attempt to explain ideas to my past self — the
-version who would have understood them sooner with a better picture.
+### B.Sc. Mathematics — Technical University of Munich
+*October 2024 – present*
 
-## Beyond the page
+- Current grade: 1.2 (top 2% of year)
+- Courses include: Analysis, Linear Algebra, Algebra, Discrete Mathematics, Probability Theory, Optimization
 
-When I am not at a chalkboard, I am usually hiking, playing the cello badly, or
-reading about the history of science. I am always glad to hear from students,
-collaborators, and curious readers — see the [contact page](/contact/).
+### Abitur — Wilhelmsgymnasium Munich
+*October 2018 – June 2024*
+
+- Grade: 1.0 (Valedictorian)
+- Focus on the arts and humanities; studied Latin and Ancient Greek
+- Active in the school music scene, performing as a solo violinist at several charity concerts
+- Moved to Munich from North London in 2018 and learned German here
+
+---
+
+## Ongoing Projects
+
+- **Quantum Information Theory Lecture Series** — Developing a mathematically rigorous lecture series on quantum information theory (lecture notes available on this website)
+- **Personal Blog** — Writing about quantum computing, information theory, and AI-based proofs at [alexanderkaempf.github.io](https://alexanderkaempf.github.io)
+
+---
+
+## Awards & Extracurriculars
+
+- **DPG-Buchpreis 2024** from the Deutsche Physikalische Gesellschaft, awarded for a W-Seminar paper simulating a tsunami using hydrodynamics and numerical methods
+- **Deutschlandstipendium** scholarship (Karl Max von Bauernfeind-Verein e.V.)
+- **Bavarian U18 record holder** for the half marathon
+- **3rd place** at the German U18 Championships 2023 over 3000m; member of the German national athletics team 2023/2024
+- **2nd prize** at the national level of "Jugend musiziert" (violin)
+- Active participation in several youth orchestras, including the British National Children's Orchestra and Puchheimer Jugendkammerorchester
+
+---
+
+## Languages
+
+| Language      | Proficiency    |
+|---------------|----------------|
+| English       | Native         |
+| German        | Fluent         |
+| Ancient Greek | Proficient     |
+| Latin         | Proficient     |
+| Python        | Proficient     |
+| Julia         | Proficient     |
+
+---
+
