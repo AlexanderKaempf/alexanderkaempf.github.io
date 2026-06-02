@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Entanglement and the Schmidt Decomposition · Alexander Kaempf</title>
+    <meta name="description" content="A canonical form for bipartite pure states that makes entanglement visible at a glance, and the awkward question of what to do about mixed states.">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="Alexander Kaempf" href="/rss.xml">
+    <!-- MathJax: typeset LaTeX in posts, e.g. \( e^{i\pi}+1=0 \) -->
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+        options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="bar">
+        <a class="brand" href="/">Alexander Kaempf</a>
+        <nav class="menu"><a href="/" >Home</a>
+          <a href="/about/" >About</a>
+          <a href="/posts/" class="active">Posts</a>
+          <a href="/contact/" >Contact</a>
+          <a class="lang" href="/de/posts/verschraenkung/" hreflang="de" title="Auf Deutsch lesen">DE</a></nav>
+      </div>
+    </header>
+
+    <main class="content"><article class="post">
+        <header class="post-head">
+          <h1>Entanglement and the Schmidt Decomposition</h1>
+          <p class="post-meta">
+            <time datetime="2026-06-16">June 16, 2026</time><span class="tag-list"><a class="tag" href="/tags/#quantum-information">quantum-information</a><a class="tag" href="/tags/#entanglement">entanglement</a><a class="tag" href="/tags/#exposition">exposition</a></span></p>
+        </header>
+        <p>The <a href="/posts/composite-systems/">last post</a> ended on a puzzle dressed as a computation: a pure state $\Psi$ of two qubits whose reduced state on each part was maximally mixed. The whole was sharp; the parts were maximally uncertain; the missing information lived in the correlations between them. We called such states entangled in passing and moved on. This post stops to do it properly.</p>
+<p>The central result is the <strong>Schmidt decomposition</strong>, a structure theorem that puts every bipartite pure state into a canonical, nearly diagonal form. From that form, entanglement becomes a matter of counting: how many terms does the decomposition need? One term means a product state, more than one means entanglement, and the reduced density matrices of the previous post fall out as a free corollary. As before $H_A, H_B$ are finite-dimensional with orthonormal bases ${e_i}, {f_j}$; the finite-dimensionality genuinely matters here, since the proof runs through the singular value decomposition of a finite matrix.</p>
+<h2>Product and entangled states</h2>
+<p><strong>Definition 1.</strong> A unit vector $\psi \in H_A \otimes H_B$ is a <strong>product state</strong> if there exist $\phi_A \in H_A$ and $\phi_B \in H_B$ with $\psi = \phi_A \otimes \phi_B$. Otherwise $\psi$ is <strong>entangled</strong>.</p>
+<p>The definition is clean but operationally useless: it asks us to search over all factorizations and report failure. We want instead an invariant we can compute. The Schmidt decomposition provides exactly that.</p>
+<h2>The Schmidt decomposition</h2>
+<p><strong>Theorem (Schmidt).</strong> Let $\psi \in H_A \otimes H_B$ be a unit vector. Then there exist orthonormal sets ${u_1, \dots, u_r} \subseteq H_A$ and ${v_1, \dots, v_r} \subseteq H_B$, together with strictly positive reals $\lambda_1 \geq \dots \geq \lambda_r &gt; 0$ satisfying $\sum_{k=1}^r \lambda_k^2 = 1$, such that
+$$\psi = \sum_{k=1}^{r} \lambda_k, u_k \otimes v_k.$$
+The number $r$ and the coefficients ${\lambda_k}$ are uniquely determined by $\psi$.</p>
+<p><strong>Proof.</strong> Expand $\psi$ in the product basis as $\psi = \sum_{i,j} c_{ij}, e_i \otimes f_j$ and collect the coefficients into a matrix $C = (c_{ij})$. Normalization of $\psi$ says $\sum_{i,j}|c_{ij}|^2 = 1$, i.e. $|C|<em>{\mathrm{HS}} = 1$. The <strong>singular value decomposition</strong> writes $C = U \Sigma V^\ast$ with $U, V$ unitary and $\Sigma$ diagonal with non-negative entries $\lambda_1 \geq \dots \geq \lambda_r &gt; 0$ (and zeros beyond), so that
+$$c</em>{ij} = \sum_k U_{ik},\lambda_k,\overline{V_{jk}}.$$
+Define $u_k := \sum_i U_{ik},e_i$ and $v_k := \sum_j \overline{V_{jk}},f_j$. Because the columns of a unitary matrix are orthonormal,
+$$\langle u_k, u_l\rangle = \sum_i \overline{U_{ik}},U_{il} = \delta_{kl}, \qquad \langle v_k, v_l\rangle = \sum_j V_{jk},\overline{V_{jl}} = \delta_{kl},$$
+so ${u_k}$ and ${v_k}$ are orthonormal. Substituting,
+$$\psi = \sum_{i,j} c_{ij}, e_i\otimes f_j = \sum_k \lambda_k \Bigl(\sum_i U_{ik} e_i\Bigr)\otimes\Bigl(\sum_j \overline{V_{jk}} f_j\Bigr) = \sum_k \lambda_k, u_k \otimes v_k.$$
+The Frobenius norm is unchanged by the unitaries, so $\sum_k \lambda_k^2 = |C|_{\mathrm{HS}}^2 = 1$. Uniqueness of $r$ and ${\lambda_k}$ follows from the uniqueness of the singular values of $C$, which we will re-derive in the next proposition as eigenvalues of an operator attached to $\psi$. $\square$</p>
+<p><strong>Definition 2.</strong> The number $r$ of nonzero coefficients in the Schmidt decomposition of $\psi$ is the <strong>Schmidt rank</strong>, and the ${\lambda_k}$ are the <strong>Schmidt coefficients</strong>.</p>
+<p>The Schmidt rank is the invariant we were after. It collapses the search over all factorizations into a single integer.</p>
+<p><strong>Proposition 1.</strong> A unit vector $\psi \in H_A \otimes H_B$ is a product state if and only if its Schmidt rank is $1$.</p>
+<p><strong>Proof.</strong> If $r = 1$ then $\psi = \lambda_1, u_1 \otimes v_1$ with $\lambda_1 = 1$, a product state. Conversely, if $\psi = \phi_A \otimes \phi_B$, then writing $\phi_A, \phi_B$ as unit vectors (absorbing norms and a phase into one factor) gives a decomposition with a single term, and uniqueness forces $r = 1$. $\square$</p>
+<p>So entanglement is simply $r &gt; 1$. It remains to connect this to the reduced states of the previous post, and here the decomposition pays off immediately.</p>
+<p><strong>Proposition 2.</strong> Let $\psi = \sum_k \lambda_k, u_k\otimes v_k$ be the Schmidt decomposition of a unit vector, and let $\rho = \psi\langle\psi,\cdot\rangle$. Then the reduced density matrices are
+$$\rho_A = \operatorname{tr}_B(\rho) = \sum_k \lambda_k^2, u_k\langle u_k, \cdot\rangle, \qquad \rho_B = \operatorname{tr}_A(\rho) = \sum_k \lambda_k^2, v_k\langle v_k, \cdot\rangle.$$
+In particular $\rho_A$ and $\rho_B$ have the same nonzero eigenvalues, namely ${\lambda_k^2}$, and $\psi$ is a product state if and only if $\rho_A$ (equivalently $\rho_B$) is pure.</p>
+<p><strong>Proof.</strong> Using the defining property of the partial trace on $\rho = \sum_{k,l}\lambda_k\lambda_l,(u_k\otimes v_k)\langle u_l\otimes v_l, \cdot\rangle$ and the orthonormality $\langle v_l, v_k\rangle = \delta_{kl}$, the cross terms vanish and
+$$\rho_A = \sum_{k,l}\lambda_k\lambda_l,\langle v_l, v_k\rangle, u_k\langle u_l, \cdot\rangle = \sum_k \lambda_k^2, u_k\langle u_k, \cdot\rangle.$$
+The computation for $\rho_B$ is identical with the roles exchanged. Both reduced states are therefore diagonal in their Schmidt bases with eigenvalues ${\lambda_k^2}$. By <strong>Proposition 4</strong> of the first post, $\rho_A$ is pure iff a single eigenvalue equals $1$, i.e. iff $r = 1$, which by <strong>Proposition 1</strong> is exactly the product case. $\square$</p>
+<p>This closes the loop with the previous post. The maximally mixed reduced state $\rho_A = \tfrac12 I$ we found for the Bell state $\Psi = \tfrac1{\sqrt2}(e_0\otimes e_0 + e_1\otimes e_1)$ is now legible: its Schmidt coefficients are $\lambda_1 = \lambda_2 = \tfrac1{\sqrt2}$, the reduced eigenvalues are $\tfrac12, \tfrac12$, and the state is as far from a product as a two-qubit state can be. The "lost" information was the off-diagonal correlation between $A$ and $B$, and the Schmidt form displays it as the presence of a second term. States whose reduced state is maximally mixed are called <strong>maximally entangled</strong>, and the Bell states are the canonical examples.</p>
+<h2>Mixed states and the trouble they cause</h2>
+<p>Everything above concerned <em>pure</em> states, where entanglement reduces to the single integer $r$. For mixed states the question is harder, and honesty requires admitting that it is not fully solved.</p>
+<p><strong>Definition 3.</strong> A density matrix $\rho$ on $H_A \otimes H_B$ is <strong>separable</strong> if it is a convex combination of product states,
+$$\rho = \sum_k p_k; \rho_A^{(k)} \otimes \rho_B^{(k)}, \qquad p_k \geq 0,\ \sum_k p_k = 1,$$
+with each $\rho_A^{(k)}, \rho_B^{(k)}$ a density matrix on the respective factor. Otherwise $\rho$ is <strong>entangled</strong>.</p>
+<p>The definition is the natural one — a separable state is one that can be prepared by local operations and shared classical randomness, with no quantum correlation manufactured between the parts. The difficulty is that, unlike the pure case, there is no decomposition to read $r$ off from, and deciding membership in the separable set is computationally hard in general. What we have instead are <em>necessary</em> conditions, the cleanest of which is the following.</p>
+<p><strong>Theorem (PPT criterion; Peres 1996, Horodecki³ 1996).</strong> Let $\rho^{T_B}$ denote the partial transpose of $\rho$ on the $B$ factor, i.e. the operator with matrix elements
+$$\langle e_i\otimes f_j,; \rho^{T_B}, e_k\otimes f_l\rangle = \langle e_i\otimes f_l,; \rho, e_k\otimes f_j\rangle.$$
+If $\rho$ is separable, then $\rho^{T_B} \geq 0$. Moreover, when $\dim H_A \cdot \dim H_B \leq 6$ — that is, in dimensions $2\times 2$ and $2\times 3$ — the converse also holds: $\rho^{T_B}\geq 0$ implies $\rho$ separable.</p>
+<p>The asymmetry in that statement is the honest part. Transposition sends a density matrix to a density matrix, but it is positive without being <em>completely</em> positive, and the partial transpose can therefore drag an entangled state below zero. That a separable state survives the operation is immediate from <strong>Definition 3</strong>, since each $(\rho_A^{(k)}\otimes\rho_B^{(k)})^{T_B} = \rho_A^{(k)}\otimes(\rho_B^{(k)})^{T}$ is again a product of density matrices and hence non-negative. The converse holding only in the smallest dimensions is not a gap in the argument but a fact about the world: in $3\times 3$ and beyond there exist entangled states with non-negative partial transpose, the so-called bound entangled states, invisible to this test. We will not need them, but it is worth knowing the clean criterion has a ceiling.</p>
+<h2>Looking ahead</h2>
+<p>We now have states — pure and mixed, product and entangled — and a fairly complete picture of the bipartite pure case. What we do not yet have is <em>dynamics</em>: a description of how states change, how they are measured, and what happens to a system left exposed to an environment it cannot control. Notably, the partial trace of the last post and the not-completely-positive transpose of this one have both quietly raised the question of which maps on density matrices are physically allowed.</p>
+<p>The <a href="/posts/quantum-channels/">next post</a> answers it. We characterize the physically realizable operations on density matrices as the <strong>completely positive, trace-preserving maps</strong>, prove the <strong>Kraus representation</strong> that writes every such map in a concrete operator form, and meet the <strong>Stinespring dilation</strong>, which reveals every channel as a unitary on a larger system followed by — fittingly — a partial trace. The thread of this post, that ignoring a subsystem is where the interesting structure hides, turns out to run straight through the theory of open quantum systems.</p>
+
+      </article></main>
+
+    <footer class="site-footer">
+      <div class="bar">
+        <span>© Alexander Kaempf</span>
+        <span class="dim">Built with Cobalt.</span>
+      </div>
+    </footer>
+  </body>
+</html>
