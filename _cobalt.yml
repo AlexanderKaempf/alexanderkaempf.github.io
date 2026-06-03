@@ -3,6 +3,7 @@ site:
   description: Mathematician — research, notes, and writing on analysis and number theory.
   base_url: http://localhost:1027
 
+
 # Every Markdown/Liquid page uses the master layout by default.
 pages:
   default:
@@ -18,3 +19,6 @@ posts:
   default:
     layout: default.liquid
     permalink: "/posts/{{ slug }}/"
+
+ignore:
+  - "**/.DS_Store"

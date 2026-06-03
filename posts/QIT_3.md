@@ -1,6 +1,6 @@
 ---
 title: QIT 3 - Entanglement and the Schmidt Decomposition
-published_date: 2026-01-16 18:01:55 +0000
+published_date: 2025-11-16 18:01:55 +0000
 description: A canonical form for bipartite pure states that makes entanglement immediately visible.
 tags:
   - quantum-information
@@ -12,68 +12,74 @@ data:
   alt_url: /de/posts/verschraenkung/
 ---
 
-The [last post](/posts/composite-systems/) ended on a puzzle dressed as a computation: a pure state $\Psi$ of two qubits whose reduced state on each part was maximally mixed. The whole was sharp; the parts were maximally uncertain; the missing information lived in the correlations between them. We called such states entangled in passing and moved on. This post stops to do it properly.
+A pure state of a composite system is either a product of local states or it is not; the latter is entanglement. The Schmidt decomposition supplies canonical coordinates that make the distinction quantitative and exhibit the reduced states at once.
 
-The central result is the **Schmidt decomposition**, a structure theorem that puts every bipartite pure state into a canonical, nearly diagonal form. From that form, entanglement becomes a matter of counting: how many terms does the decomposition need? One term means a product state, more than one means entanglement, and the reduced density matrices of the previous post fall out as a free corollary. As before $H_A, H_B$ are finite-dimensional with orthonormal bases $\{e_i\}, \{f_j\}$; the finite-dimensionality genuinely matters here, since the proof runs through the singular value decomposition of a finite matrix.
+Throughout $\mathcal{H}\_A$, $\mathcal{H}\_B$ are finite-dimensional, and a state $|\psi\rangle \in \mathcal{H}\_A \otimes \mathcal{H}\_B$ is a unit vector unless stated otherwise.
 
 ## Product and entangled states
 
-**Definition 1.** A unit vector $\psi \in H_A \otimes H_B$ is a **product state** if there exist $\phi_A \in H_A$ and $\phi_B \in H_B$ with $\psi = \phi_A \otimes \phi_B$. Otherwise $\psi$ is **entangled**.
+**Definition 1.** A pure state $|\psi\rangle \in \mathcal{H}\_A \otimes \mathcal{H}\_B$ is a *product state* if $|\psi\rangle = |a\rangle \otimes |b\rangle$ for some $|a\rangle, |b\rangle$, and *entangled* otherwise. A mixed state $\rho$ is *separable* if it is a convex combination of product states $\sum\_i q\_i  \sigma\_i \otimes \tau\_i$, and entangled otherwise.
 
-The definition is clean but operationally useless: it asks us to search over all factorizations and report failure. We want instead an invariant we can compute. The Schmidt decomposition provides exactly that.
+Mixed-state separability is a strictly harder condition to test and is taken up later in the series. This post concerns the pure-state structure, which the next theorem resolves completely.
 
 ## The Schmidt decomposition
 
-**Theorem (Schmidt).** Let $\psi \in H_A \otimes H_B$ be a unit vector. Then there exist orthonormal sets $\{u_1, \dots, u_r\} \subseteq H_A$ and $\{v_1, \dots, v_r\} \subseteq H_B$, together with strictly positive reals $\lambda_1 \geq \dots \geq \lambda_r > 0$ satisfying $\sum_{k=1}^r \lambda_k^2 = 1$, such that
-$$\psi = \sum_{k=1}^{r} \lambda_k\, u_k \otimes v_k.$$
-The number $r$ and the coefficients $\{\lambda_k\}$ are uniquely determined by $\psi$.
+**Theorem 2.** For every unit vector $|\psi\rangle \in \mathcal{H}\_A \otimes \mathcal{H}\_B$ there are orthonormal sets $\{u\_k\} \subset \mathcal{H}\_A$ and $\{v\_k\} \subset \mathcal{H}\_B$ and reals $\lambda\_1 \geq \dots \geq \lambda\_r > 0$ with
 
-**Proof.** Expand $\psi$ in the product basis as $\psi = \sum_{i,j} c_{ij}\, e_i \otimes f_j$ and collect the coefficients into a matrix $C = (c_{ij})$. Normalization of $\psi$ says $\sum_{i,j}|c_{ij}|^2 = 1$, i.e. $\|C\|_{\mathrm{HS}} = 1$. The **singular value decomposition** writes $C = U \Sigma V^\ast$ with $U, V$ unitary and $\Sigma$ diagonal with non-negative entries $\lambda_1 \geq \dots \geq \lambda_r > 0$ (and zeros beyond), so that
-$$c_{ij} = \sum_k U_{ik}\,\lambda_k\,\overline{V_{jk}}.$$
-Define $u_k := \sum_i U_{ik}\,e_i$ and $v_k := \sum_j \overline{V_{jk}}\,f_j$. Because the columns of a unitary matrix are orthonormal,
-$$\langle u_k, u_l\rangle = \sum_i \overline{U_{ik}}\,U_{il} = \delta_{kl}, \qquad \langle v_k, v_l\rangle = \sum_j V_{jk}\,\overline{V_{jl}} = \delta_{kl},$$
-so $\{u_k\}$ and $\{v_k\}$ are orthonormal. Substituting,
-$$\psi = \sum_{i,j} c_{ij}\, e_i\otimes f_j = \sum_k \lambda_k \Bigl(\sum_i U_{ik} e_i\Bigr)\otimes\Bigl(\sum_j \overline{V_{jk}} f_j\Bigr) = \sum_k \lambda_k\, u_k \otimes v_k.$$
-The Frobenius norm is unchanged by the unitaries, so $\sum_k \lambda_k^2 = \|C\|_{\mathrm{HS}}^2 = 1$. Uniqueness of $r$ and $\{\lambda_k\}$ follows from the uniqueness of the singular values of $C$, which we will re-derive in the next proposition as eigenvalues of an operator attached to $\psi$. $\square$
+$$|\psi\rangle = \sum\_{k=1}^{r} \lambda\_k  u\_k \otimes v\_k, \qquad \sum\_k \lambda\_k^2 = 1.$$
 
-**Definition 2.** The number $r$ of nonzero coefficients in the Schmidt decomposition of $\psi$ is the **Schmidt rank**, and the $\{\lambda_k\}$ are the **Schmidt coefficients**.
+The number $r$ (the *Schmidt rank*) and the coefficients $\lambda\_k$ (the *Schmidt coefficients*) are uniquely determined by $|\psi\rangle$.
 
-The Schmidt rank is the invariant we were after. It collapses the search over all factorizations into a single integer.
+*Proof.* Expand $|\psi\rangle$ in product bases as $|\psi\rangle = \sum\_{i,j} c\_{ij}  e\_i \otimes f\_j$ and collect the coefficients into a matrix $C = (c\_{ij})$. Normalization reads $\sum\_{i,j} \lvert c\_{ij}\rvert^2 = 1$, i.e. $\lVert C\rVert\_{\mathrm{HS}} = 1$. The singular value decomposition writes $C = U \Sigma V^\ast$ with $U, V$ unitary and $\Sigma$ diagonal with entries $\lambda\_1 \geq \dots \geq \lambda\_r > 0$ (and zeros beyond), so that
 
-**Proposition 1.** A unit vector $\psi \in H_A \otimes H_B$ is a product state if and only if its Schmidt rank is $1$.
+$$c\_{ij} = \sum\_k U\_{ik}  \lambda\_k  \overline{V\_{jk}}.$$
 
-**Proof.** If $r = 1$ then $\psi = \lambda_1\, u_1 \otimes v_1$ with $\lambda_1 = 1$, a product state. Conversely, if $\psi = \phi_A \otimes \phi_B$, then writing $\phi_A, \phi_B$ as unit vectors (absorbing norms and a phase into one factor) gives a decomposition with a single term, and uniqueness forces $r = 1$. $\square$
+Define $u\_k = \sum\_i U\_{ik}  e\_i$ and $v\_k = \sum\_j \overline{V\_{jk}}  f\_j$. Since the columns of a unitary matrix are orthonormal,
 
-So entanglement is simply $r > 1$. It remains to connect this to the reduced states of the previous post, and here the decomposition pays off immediately.
+$$\langle u\_k, u\_l\rangle = \sum\_i \overline{U\_{ik}}  U\_{il} = \delta\_{kl}, \qquad \langle v\_k, v\_l\rangle = \sum\_j V\_{jk}  \overline{V\_{jl}} = \delta\_{kl},$$
 
-**Proposition 2.** Let $\psi = \sum_k \lambda_k\, u_k\otimes v_k$ be the Schmidt decomposition of a unit vector, and let $\rho = \psi\langle\psi,\cdot\rangle$. Then the reduced density matrices are
-$$\rho_A = \operatorname{tr}_B(\rho) = \sum_k \lambda_k^2\, u_k\langle u_k, \cdot\rangle, \qquad \rho_B = \operatorname{tr}_A(\rho) = \sum_k \lambda_k^2\, v_k\langle v_k, \cdot\rangle.$$
-In particular $\rho_A$ and $\rho_B$ have the same nonzero eigenvalues, namely $\{\lambda_k^2\}$, and $\psi$ is a product state if and only if $\rho_A$ (equivalently $\rho_B$) is pure.
+so $\{u\_k\}$ and $\{v\_k\}$ are orthonormal. Substituting,
 
-**Proof.** Using the defining property of the partial trace on $\rho = \sum_{k,l}\lambda_k\lambda_l\,(u_k\otimes v_k)\langle u_l\otimes v_l, \cdot\rangle$ and the orthonormality $\langle v_l, v_k\rangle = \delta_{kl}$, the cross terms vanish and
-$$\rho_A = \sum_{k,l}\lambda_k\lambda_l\,\langle v_l, v_k\rangle\, u_k\langle u_l, \cdot\rangle = \sum_k \lambda_k^2\, u_k\langle u_k, \cdot\rangle.$$
-The computation for $\rho_B$ is identical with the roles exchanged. Both reduced states are therefore diagonal in their Schmidt bases with eigenvalues $\{\lambda_k^2\}$. By **Proposition 4** of the first post, $\rho_A$ is pure iff a single eigenvalue equals $1$, i.e. iff $r = 1$, which by **Proposition 1** is exactly the product case. $\square$
+$$|\psi\rangle = \sum\_{i,j} c\_{ij}  e\_i \otimes f\_j = \sum\_k \lambda\_k \Bigl(\sum\_i U\_{ik}  e\_i\Bigr) \otimes \Bigl(\sum\_j \overline{V\_{jk}}  f\_j\Bigr) = \sum\_k \lambda\_k  u\_k \otimes v\_k.$$
 
-This closes the loop with the previous post. The maximally mixed reduced state $\rho_A = \tfrac12 I$ we found for the Bell state $\Psi = \tfrac1{\sqrt2}(e_0\otimes e_0 + e_1\otimes e_1)$ is now legible: its Schmidt coefficients are $\lambda_1 = \lambda_2 = \tfrac1{\sqrt2}$, the reduced eigenvalues are $\tfrac12, \tfrac12$, and the state is as far from a product as a two-qubit state can be. The "lost" information was the off-diagonal correlation between $A$ and $B$, and the Schmidt form displays it as the presence of a second term. States whose reduced state is maximally mixed are called **maximally entangled**, and the Bell states are the canonical examples.
+The Hilbert–Schmidt norm is invariant under the unitaries, so $\sum\_k \lambda\_k^2 = \lVert C\rVert\_{\mathrm{HS}}^2 = 1$. Uniqueness of $r$ and the $\lambda\_k$ follows from uniqueness of the singular values of $C$, re-derived below as eigenvalues of the reduced state. $\square$
 
-## Mixed states and the trouble they cause
+## Reduced states and the Schmidt rank
 
-Everything above concerned *pure* states, where entanglement reduces to the single integer $r$. For mixed states the question is harder, and honesty requires admitting that it is not fully solved.
+**Proposition 3.** If $|\psi\rangle = \sum\_k \lambda\_k  u\_k \otimes v\_k$ is a Schmidt decomposition, then
 
-**Definition 3.** A density matrix $\rho$ on $H_A \otimes H_B$ is **separable** if it is a convex combination of product states,
-$$\rho = \sum_k p_k\; \rho_A^{(k)} \otimes \rho_B^{(k)}, \qquad p_k \geq 0,\ \sum_k p_k = 1,$$
-with each $\rho_A^{(k)}, \rho_B^{(k)}$ a density matrix on the respective factor. Otherwise $\rho$ is **entangled**.
+$$\rho\_A = \operatorname{tr}\_B |\psi\rangle\langle\psi| = \sum\_k \lambda\_k^2  |u\_k\rangle\langle u\_k|, \qquad \rho\_B = \operatorname{tr}\_A |\psi\rangle\langle\psi| = \sum\_k \lambda\_k^2  |v\_k\rangle\langle v\_k|.$$
 
-The definition is the natural one — a separable state is one that can be prepared by local operations and shared classical randomness, with no quantum correlation manufactured between the parts. The difficulty is that, unlike the pure case, there is no decomposition to read $r$ off from, and deciding membership in the separable set is computationally hard in general. What we have instead are *necessary* conditions, the cleanest of which is the following.
+In particular $\rho\_A$ and $\rho\_B$ share the nonzero spectrum $\{\lambda\_k^2\}$, and $\operatorname{rank}\rho\_A = \operatorname{rank}\rho\_B = r$.
 
-**Theorem (PPT criterion; Peres 1996, Horodecki³ 1996).** Let $\rho^{T_B}$ denote the partial transpose of $\rho$ on the $B$ factor, i.e. the operator with matrix elements
-$$\langle e_i\otimes f_j,\; \rho^{T_B}\, e_k\otimes f_l\rangle = \langle e_i\otimes f_l,\; \rho\, e_k\otimes f_j\rangle.$$
-If $\rho$ is separable, then $\rho^{T_B} \geq 0$. Moreover, when $\dim H_A \cdot \dim H_B \leq 6$ — that is, in dimensions $2\times 2$ and $2\times 3$ — the converse also holds: $\rho^{T_B}\geq 0$ implies $\rho$ separable.
+*Proof.* Orthonormality of $\{v\_k\}$ gives $\operatorname{tr}|v\_k\rangle\langle v\_l| = \delta\_{kl}$, so
 
-The asymmetry in that statement is the honest part. Transposition sends a density matrix to a density matrix, but it is positive without being *completely* positive, and the partial transpose can therefore drag an entangled state below zero. That a separable state survives the operation is immediate from **Definition 3**, since each $(\rho_A^{(k)}\otimes\rho_B^{(k)})^{T_B} = \rho_A^{(k)}\otimes(\rho_B^{(k)})^{T}$ is again a product of density matrices and hence non-negative. The converse holding only in the smallest dimensions is not a gap in the argument but a fact about the world: in $3\times 3$ and beyond there exist entangled states with non-negative partial transpose, the so-called bound entangled states, invisible to this test. We will not need them, but it is worth knowing the clean criterion has a ceiling.
+$$\operatorname{tr}\_B |\psi\rangle\langle\psi| = \sum\_{k,l} \lambda\_k \lambda\_l  |u\_k\rangle\langle u\_l|  \operatorname{tr}|v\_k\rangle\langle v\_l| = \sum\_k \lambda\_k^2  |u\_k\rangle\langle u\_k|.$$
 
-## Looking ahead
+The computation for $\rho\_B$ is identical. Both are diagonal with the same nonzero entries $\lambda\_k^2$, $k = 1, \dots, r$. $\square$
 
-We now have states — pure and mixed, product and entangled — and a fairly complete picture of the bipartite pure case. What we do not yet have is *dynamics*: a description of how states change, how they are measured, and what happens to a system left exposed to an environment it cannot control. Notably, the partial trace of the last post and the not-completely-positive transpose of this one have both quietly raised the question of which maps on density matrices are physically allowed.
+This exhibits the Schmidt coefficients as the square roots of the common eigenvalues of the two reduced states, which proves their uniqueness and closes the gap left in Theorem 2.
 
-The [next post](/posts/quantum-channels/) answers it. We characterize the physically realizable operations on density matrices as the **completely positive, trace-preserving maps**, prove the **Kraus representation** that writes every such map in a concrete operator form, and meet the **Stinespring dilation**, which reveals every channel as a unitary on a larger system followed by — fittingly — a partial trace. The thread of this post, that ignoring a subsystem is where the interesting structure hides, turns out to run straight through the theory of open quantum systems.
+**Corollary 4.** For a pure bipartite state the following are equivalent: $|\psi\rangle$ is a product state; its Schmidt rank is $1$; $\rho\_A$ is pure; $\rho\_B$ is pure.
+
+*Proof.* A product state $|a\rangle \otimes |b\rangle$ is a single Schmidt term, and conversely $r = 1$ gives $|\psi\rangle = \lambda\_1  u\_1 \otimes v\_1$ with $\lambda\_1 = 1$, a product. By Proposition 3, $r = 1$ holds exactly when $\rho\_A = |u\_1\rangle\langle u\_1|$ is rank one, i.e. pure, and likewise for $\rho\_B$. $\square$
+
+Thus a pure state is entangled precisely when its reduced states are mixed: entanglement of a pure bipartite state is the local loss of purity.
+
+## Entanglement entropy
+
+**Definition 5.** The *entanglement entropy* of $|\psi\rangle$ is the von Neumann entropy of either reduced state,
+
+$$E(\psi) = S(\rho\_A) = -\sum\_k \lambda\_k^2 \log \lambda\_k^2,$$
+
+which equals $S(\rho\_B)$ by Proposition 3 and is therefore well-defined.
+
+By Corollary 4, $E(\psi) = 0$ holds exactly for product states. With $d = \min(d\_A, d\_B)$, the entropy is maximal, equal to $\log d$, exactly when all $\lambda\_k^2 = 1/d$; such states are called maximally entangled, and their reduced states are the maximally mixed operator $I/d$.
+
+## Uniqueness of purification
+
+The Schmidt decomposition settles the uniqueness clause of the purification theorem from the previous post.
+
+**Proposition 6.** If $|\psi\rangle, |\psi'\rangle \in \mathcal{H}\_A \otimes \mathcal{H}\_R$ both purify $\rho \in \mathcal{S}(\mathcal{H}\_A)$, there is a unitary $W$ on $\mathcal{H}\_R$ with $(I \otimes W)|\psi\rangle = |\psi'\rangle$.
+
+*Proof.* By Proposition 3 the $A$-reductions of $|\psi\rangle$ and $|\psi'\rangle$ both equal $\rho$, so both Schmidt decompositions have coefficients $\lambda\_k = \sqrt{p\_k}$, where the $p\_k$ are the eigenvalues of $\rho$. Choosing the same eigenbasis $\{u\_k\}$ of $\rho$ for the $A$-factor of both (possible after a unitary on each eigenspace of $\rho$ that fixes $\rho$ and acts within the relevant Schmidt vectors), write $|\psi\rangle = \sum\_k \sqrt{p\_k}  u\_k \otimes v\_k$ and $|\psi'\rangle = \sum\_k \sqrt{p\_k}  u\_k \otimes v\_k'$ with $\{v\_k\}, \{v\_k'\}$ orthonormal in $\mathcal{H}\_R$. Define $W$ on $\mathcal{H}\_R$ by $W v\_k = v\_k'$, extended to a unitary on the orthogonal complement. Then $(I \otimes W)|\psi\rangle = |\psi'\rangle$. $\square$

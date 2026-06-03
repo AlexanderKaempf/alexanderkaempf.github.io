@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en">
+  <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$',  right: '$',  display: false}
+      ],
+      throwOnError: false
+    });"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>QIT 5 - Measurements, POVMs, and Instruments · Alexander Kaempf</title>
+    <meta name="description" content="Mathematician — research, notes, and writing on analysis and number theory.">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="Alexander Kaempf" href="/rss.xml">
+    <!-- MathJax: typeset LaTeX in posts, e.g. \( e^{i\pi}+1=0 \) -->
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+        options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="bar">
+        <a class="brand" href="/">Alexander Kaempf</a>
+        <nav class="menu"><a href="/" >Home</a>
+          <a href="/about/" >About</a>
+          <a href="/posts/" class="active">Posts</a>
+          <a href="/contact/" >Contact</a>
+          <a class="lang" href="/de/posts/Messungen/" hreflang="de" title="Auf Deutsch lesen">DE</a></nav>
+      </div>
+    </header>
+
+    <main class="content"><article class="post">
+        <header class="post-head">
+          <h1>QIT 5 - Measurements, POVMs, and Instruments</h1>
+          <p class="post-meta">
+            <time datetime="2026-03-01">March 1, 2026</time><span class="tag-list"><a class="tag" href="/tags/#quantum-information">quantum-information</a><a class="tag" href="/tags/#operator-algebras">operator-algebras</a></span></p>
+        </header>
+        <p>The projection postulate describes one kind of measurement. The object that records outcome probabilities in full generality is a positive operator-valued measure (POVM); the object that records probabilities <em>together with</em> the resulting state is a quantum instrument. Both connect to the channel formalism of the previous post through dilation theorems and the completely positive structure.</p>
+<p>Throughout $\mathcal{H}$ is finite-dimensional and outcome sets $\Omega$ are finite.</p>
+<h2>POVMs</h2>
+<p><strong>Definition 1.</strong> A <em>POVM</em> on $\mathcal{H}$ with outcome set $\Omega$ is a family ${E_m}_{m \in \Omega}$ of operators with $E_m \geq 0$ and $\sum_{m} E_m = I$. On state $\rho$ the outcome $m$ occurs with probability $p(m) = \operatorname{tr}(\rho E_m)$.</p>
+<p>Positivity gives $p(m) \geq 0$ and the resolution of identity gives $\sum_m p(m) = \operatorname{tr}\rho = 1$, so the Born rule yields a genuine distribution for every state. A <em>projection-valued measure</em> (PVM) is the special case where the $E_m = P_m$ are orthogonal projectors with $P_m P_{m'} = \delta_{mm'} P_m$; this is the von Neumann measurement of an observable with spectral projectors $P_m$.</p>
+<p>Not every POVM is a PVM, and the gap is genuine rather than a normalization artifact.</p>
+<p><strong>Example 2.</strong> On a qubit, let $|\psi_k\rangle$, $k = 0,1,2$, be the trine states at angles $2\pi k/3$ on a great circle, and set $E_k = \tfrac{2}{3}|\psi_k\rangle\langle\psi_k|$. Then $\sum_k E_k = \tfrac{2}{3} \cdot \tfrac{3}{2} I = I$, so ${E_k}$ is a POVM with three outcomes. A PVM on $\mathbb{C}^2$ has at most two nonzero elements, so this is not a PVM. It is the optimal measurement for distinguishing the three trine states symmetrically.</p>
+<h2>Naimark dilation</h2>
+<p>A POVM on $\mathcal{H}$ is the compression of a sharp measurement on a larger space, mirroring Stinespring for channels.</p>
+<p><strong>Theorem 3 (Naimark).</strong> For every POVM ${E_m}$ on $\mathcal{H}$ there is a Hilbert space $\mathcal{K}$, an isometry $V : \mathcal{H} \to \mathcal{K}$, and a PVM ${P_m}$ on $\mathcal{K}$ with $E_m = V^\ast P_m V$.</p>
+<p><em>Proof.</em> Let $\mathcal{K} = \mathcal{H} \otimes \mathbb{C}^{|\Omega|}$ with basis ${|m\rangle}$ of the second factor, and define $V|\phi\rangle = \sum_m \bigl(\sqrt{E_m} |\phi\rangle\bigr) \otimes |m\rangle$. Then $V^\ast V = \sum_m E_m = I$, so $V$ is an isometry. Take the PVM $P_m = I \otimes |m\rangle\langle m|$. The adjoint acts by $V^\ast(\xi \otimes |m\rangle) = \sqrt{E_m} \xi$, since $\langle\phi| V^\ast(\xi \otimes |m\rangle) = \langle V\phi | \xi \otimes |m\rangle = \langle \sqrt{E_m} \phi | \xi \rangle$. Hence</p>
+<p>$$V^\ast P_m V |\phi\rangle = V^\ast\bigl(\sqrt{E_m} |\phi\rangle \otimes |m\rangle\bigr) = \sqrt{E_m} \sqrt{E_m} |\phi\rangle = E_m |\phi\rangle. \qquad \square$$</p>
+<p>Stinespring and Naimark are the same statement for two coarse-grainings of measurement: a channel is an isometry followed by discarding the environment, a POVM is a projective measurement on the dilated space followed by restriction to $\mathcal{H}$. The next definition makes the common refinement explicit.</p>
+<h2>Instruments</h2>
+<p>A POVM gives outcome probabilities but says nothing about the post-measurement state. The full object is the following.</p>
+<p><strong>Definition 4.</strong> A <em>quantum instrument</em> with outcome set $\Omega$ is a family ${\Phi_m}_{m \in \Omega}$ of completely positive maps on $\mathcal{B}(\mathcal{H})$ such that $\sum_m \Phi_m$ is trace-preserving. On input $\rho$, outcome $m$ occurs with probability $p(m) = \operatorname{tr}\Phi_m(\rho)$, and the conditional post-measurement state is $\rho_m = \Phi_m(\rho)/p(m)$.</p>
+<p>The instrument carries two coarse-grainings, each discarding one kind of information.</p>
+<p><strong>Proposition 5.</strong> Let ${\Phi_m}$ be an instrument.</p>
+<p><em>Discarding the state.</em> The operators $E_m = \Phi_m^\ast(I)$ form a POVM, and $\operatorname{tr}\Phi_m(\rho) = \operatorname{tr}(\rho E_m)$ for all $\rho$.</p>
+<p><em>Discarding the outcome.</em> The map $\rho \mapsto \sum_m \Phi_m(\rho)$ is a channel — the non-selective evolution induced by the measurement.</p>
+<p><em>Proof.</em> Each $\Phi_m$ is CP, so its adjoint $\Phi_m^\ast$ is positive and $E_m = \Phi_m^\ast(I) \geq 0$. Trace-preservation of $\sum_m \Phi_m$ reads $\operatorname{tr}\bigl(\sum_m \Phi_m(\rho)\bigr) = \operatorname{tr}\rho$ for all $\rho$, equivalently $\sum_m \Phi_m^\ast(I) = I$, so ${E_m}$ resolves the identity. The defining adjoint relation $\operatorname{tr}\Phi_m(\rho) = \operatorname{tr}(\rho \Phi_m^\ast(I)) = \operatorname{tr}(\rho E_m)$ recovers the Born rule. The second claim is immediate: $\sum_m \Phi_m$ is CP as a sum of CP maps and TP by assumption. $\square$</p>
+<p>So the instrument is the finest of the three objects, with the channel and the POVM as its two marginals: forget the outcome to get a channel, forget the state to get a POVM.</p>
+<h2>Kraus form and the state-update freedom</h2>
+<p>Applying the Kraus theorem to each component, an instrument has the form $\Phi_m(\rho) = \sum_j M_{m,j} \rho M_{m,j}^\ast$, and trace-preservation of the sum reads $\sum_{m,j} M_{m,j}^\ast M_{m,j} = I$. The induced POVM is $E_m = \sum_j M_{m,j}^\ast M_{m,j}$.</p>
+<p>The POVM does not determine the instrument. Given any POVM ${E_m}$, the family $\Phi_m(\rho) = U_m \sqrt{E_m} \rho \sqrt{E_m} U_m^\ast$ is an instrument with that POVM for every choice of unitaries $U_m$; the $U_m$ describe state disturbance invisible to the outcome statistics. The choice $U_m = I$ is the <strong>Lüders instrument</strong> $\Phi_m(\rho) = \sqrt{E_m} \rho \sqrt{E_m}$.</p>
+<p><strong>Proposition 6.</strong> For the Lüders instrument of a PVM, $\Phi_m(\rho) = P_m \rho P_m$, and the measurement is repeatable: $\Phi_m \circ \Phi_m = \Phi_m$.</p>
+<p><em>Proof.</em> For a PVM $\sqrt{E_m} = \sqrt{P_m} = P_m$, giving $\Phi_m(\rho) = P_m \rho P_m$. Then $\Phi_m(\Phi_m(\rho)) = P_m P_m \rho P_m P_m = P_m \rho P_m = \Phi_m(\rho)$ using $P_m^2 = P_m$. $\square$</p>
+<p>Repeatability is special to projective measurements; a general POVM measured twice need not reproduce its first outcome. This is the precise sense in which projective measurements are the "sharp" case, and it closes the loop with the observable picture from the first post of the series. The next block turns from describing states and their evolution to using them: quantum computation.</p>
+
+      </article></main>
+
+    <footer class="site-footer">
+      <div class="bar">
+        <span>© Alexander Kaempf</span>
+        <span class="dim">Built with Cobalt.</span>
+      </div>
+    </footer>
+  </body>
+</html>
