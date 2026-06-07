@@ -1,120 +1,120 @@
 ---
-title: Causal ML 1 - Three Rungs and a Simulator
-published_date: 2026-06-04 12:00:00 +0000
-description: Why a probability distribution is the wrong object for the questions we want to ask about a model.
+title: Causality 1 - The Ladder of Causation
+published_date: 2026-06-07 12:00:00 +0000
+description: Why the founders of statistics built a science that could not say "because", and the hierarchy of questions that repairs the omission.
 tags:
   - causality
-  - machine-learning
-  - fairness
+  - probability-theory
   - exposition
 data:
   lang: en
   nav: posts
-  alt_url: /de/posts/kausales-ml-1/
+  alt_url: /de/posts/kausalitaet-1/
 ---
 
-A neural network trained to convergence learns, in the best case, the conditional distribution $P(Y \mid X)$. The claim this series rests on is that for a large class of the questions we actually care about — whether a model discriminates, what it would have predicted under a different input, what happens if we *change* something rather than merely observe it — this object is not just insufficient. It is the wrong kind of thing, and no amount of additional data fixes that.
+This is the first post in a series on causal inference, built as the foundation for a later series on causal methods in machine learning. The only prerequisite is measure-theoretic probability; the graph theory is developed where it is needed. The motivation and the historical thread come from Pearl and Mackenzie's *The Book of Why*; the definitions and theorems from Pearl's *Causality: Models, Reasoning, and Inference*. The popular book argues by anecdote, which is its charm and its limit. The aim here is to keep the argument and prove what can be proved.
 
-The cleanest way to see this is to watch an association reverse itself under intervention. Suppose a treatment $X \in \{0, 1\}$ and a recovery indicator $Y \in \{0, 1\}$, and suppose the data say
+## A science built to avoid a word
 
-$$P(Y=1 \mid X=1) = 0.67, \qquad P(Y=1 \mid X=0) = 0.33.$$
+Galton, studying heredity in the 1880s, found that the sons of tall fathers were tall but closer to average, and called it regression toward the mean. The effect is a property of any imperfectly correlated pair and says nothing about heredity pulling anyone toward mediocrity, though he first thought it did. His student Karl Pearson drew the harder conclusion: that the entire content of a relationship is its correlation, and that "cause" is a metaphysical relic the grown-up sciences should drop. Statistics was built on this refusal. The causal revolution is the claim that the refusal was an error — that there are well-posed questions no functional of the observational distribution can answer. The rest of this post makes the claim exact and proves its smallest instance.
 
-Treated patients recover more often. Yet the correct answer to "should we give this treatment?" can be *no* — the treatment can lower everyone's chance of recovery — and the rest of this post is, in essence, an explanation of how both statements hold at once, and why the resolution is not statistical but causal.
+## What association is
 
-## The three rungs
+Fix a probability space $(\Omega, \mathcal{F}, P)$. Observable quantities are random variables on it; a finite collection $V = (V_1, \dots, V_n)$ valued in a product of standard Borel spaces has a joint law
+$$P_V := V_* P = P \circ V^{-1},$$
+the pushforward of $P$ along $V$. This law is the whole observational content of the system: everything classical statistics can estimate from a sample is a functional of $P_V$.
 
-Pearl organises causal questions into a hierarchy of three levels, each strictly stronger than the last in the sense that knowing everything about one rung does not determine the next.
+Conditioning defines the first rung. On standard Borel spaces the disintegration theorem grants a regular conditional distribution — a map $x \mapsto P(Y \in \cdot \mid X = x)$ that is a probability measure for $P_X$-almost every $x$ and measurable in $x$ — so that $P(Y \mid X = x)$ is a genuine measure and not a formal ratio, including when $X$ has no atoms.
 
-**Rung 1, association.** The object is $P(Y \mid X = x)$: the distribution of $Y$ among the subpopulation where $X = x$. This is filtering — we look at the rows of the dataset with $X = x$ and read off $Y$. Supervised learning lives here. Nothing a standard model computes ever leaves this rung.
+**Definition 1 (Conditional independence).** Random variables $X$ and $Y$ are *conditionally independent given* $Z$, written $X \perp\!\!\!\perp Y \mid Z$, if for all bounded measurable $f, g$,
+$$\mathbb{E}\bigl[f(X)\,g(Y) \mid Z\bigr] = \mathbb{E}\bigl[f(X) \mid Z\bigr]\,\mathbb{E}\bigl[g(Y) \mid Z\bigr] \qquad P\text{-a.s.}$$
 
-**Rung 2, intervention.** The object is $P(Y \mid \operatorname{do}(X = x))$: the distribution of $Y$ in a world where we *set* $X$ to $x$, overriding whatever would normally have produced it. The notation is deliberately not $P(Y \mid X = x)$, because — as we are about to compute — the two are different numbers.
+**Definition 2 (Associational query).** An *associational* or *rung-one* query is any quantity expressible as a functional $\Psi(P_V)$ of the joint law of the observed variables.
 
-**Rung 3, counterfactual.** The object is $P(Y_{X=x} \mid X = x', Y = y')$: given that we observed this individual with $X = x'$ and outcome $y'$, what would their outcome have been had $X$ been $x$ instead. This conditions on the factual and asks about the contrary-to-fact in the same breath. We need it for fairness — the statement "this decision would have been the same had the applicant been of another sex" is exactly of this form — and it is the subject of the next post. Here I will build only the first two rungs, because they are enough to make the central point and because the third is meaningless without them.
+Regression functions, conditional independences, mutual information are all functionals of $P_V$, hence rung-one. The definition is generous on purpose. It grants Pearson everything he could want — unlimited data, perfect estimation, the joint law known exactly — and then asks whether that suffices.
 
-## What a distribution leaves out
+## The ladder
 
-To define the second rung we need a model that says more than a distribution does. A *structural causal model* (SCM) is a tuple $(U, V, F, P(U))$:
+Pearl sorts causal questions into three levels, each tied to a different verb.
 
-- $V = \{V_1, \dots, V_n\}$, the **endogenous** variables — the things we model;
-- $U = \{U_1, \dots, U_n\}$, the **exogenous** variables — background noise, one term feeding each endogenous variable;
-- $F = \{f_1, \dots, f_n\}$, **structural assignments**: the value of each endogenous variable is set by
+**Rung one — association — *seeing*.** Given that I observe $X = x$, what do I expect of $Y$? The object is $P(Y \mid X = x)$, a functional of $P_V$. This is the rung of curve-fitting and of every model trained to predict one coordinate of a distribution from the others.
 
-  $$V_i := f_i(\mathrm{PA}_i,\, U_i),$$
+**Rung two — intervention — *doing*.** If I *set* $X$ to $x$ by an action that reaches in and fixes its value, what happens to $Y$? The object is written $P(Y \mid \operatorname{do}(X = x))$, kept notationally distinct from conditioning because the two are different objects. Reading a low barometer and forcing the needle down by hand share a rung-one description and have opposite rung-two consequences for the weather.
 
-  with the parent set $\mathrm{PA}_i$ drawn from $V$;
-- $P(U)$, a distribution over the noise, with the $U_i$ jointly independent.
+**Rung three — counterfactual — *imagining*.** Given that I observed $X = x'$ and $Y = y'$, what would $Y$ have been had $X$ been $x$ instead? The object conditions on what happened and asks about a world contrary to it at once. This is the rung of regret and of "the headache would have gone anyway", and it needs more structure than either rung below. It is the subject of the fifth post.
 
-The assignments are read as instructions, not equations — the $:=$ is asymmetric, like a line of code. Each assignment defines a directed edge pointing from a parent set into its child variable; taken together they form a DAG. The $U_i$ being mutually independent then gives the Markov factorisation
+The claim that organises the subject is that the rungs are distinct: knowing everything on one leaves the rungs above it open. For the gap between rung one and rung two this is a theorem, elementary enough to prove now, once we have the little structure that rung two needs.
 
-$$P(v) = \prod_{i=1}^{n} P\bigl(v_i \mid \mathrm{pa}_i\bigr).$$
+## The structure rung two requires
 
-Here is the point. Two different SCMs — two different sets of assignments, two different graphs — can induce the *same* joint distribution $P(v)$. The distribution is a shadow that several distinct mechanisms cast. Rung 1 sees only the shadow. The moment we intervene, the mechanisms come apart.
+Conditioning needs only the joint law. Intervention needs a model of the mechanism, because to say what setting a variable does we must say which equations the setting overrides and which it leaves alone. That information is carried by the structural causal model. The full graphical theory is the next post; here is the minimum the theorem needs.
 
-An intervention $\operatorname{do}(X = x)$ is surgery on $F$: delete the assignment $f_X$, replace it with the constant $x$, and leave every other assignment alone. The noise $U$ and its distribution are untouched. The graph loses every arrow *into* $X$ and keeps every arrow *out* of it. The resulting distribution is the original factorisation with one factor struck out and one variable pinned — the **truncated factorisation**:
+**Definition 3 (Structural causal model, preliminary form).** A *structural causal model* on endogenous variables $V = (V_1, \dots, V_n)$ consists of mutually independent exogenous variables $U = (U_1, \dots, U_n)$ with law $P_U$, and for each $i$ a measurable *structural function* $f_i$ with a parent set $\mathrm{PA}_i \subseteq V \setminus \{V_i\}$, such that
+$$V_i = f_i(\mathrm{PA}_i,\, U_i).$$
+We assume acyclicity, so that $V$ is determined as a measurable function of $U$, and $P_V$ is the law of that function under $P_U$.
 
-$$P\bigl(v \mid \operatorname{do}(X = x)\bigr) = \prod_{i \,:\, V_i \neq X} P\bigl(v_i \mid \mathrm{pa}_i\bigr)\,\Big|_{X = x}.$$
+The assignment is a mechanism, not an equation: the left side is computed from the right, and the asymmetry is the content. Two functions that are algebraically equivalent but disagree on which variable is the output describe different mechanisms, and behave differently under intervention.
 
-Conditioning keeps the arrow into $X$ and reweights the population by it; intervening deletes that arrow. That difference is not notation. It is the whole subject.
+**Definition 4 (Atomic intervention).** Given a model $M$ and a value $x$, the *intervened model* $M_{\operatorname{do}(X = x)}$ deletes the equation for $X$ and replaces it with $X := x$, leaving every other equation and the law $P_U$ untouched. The *interventional distribution* $P^{M}(\,\cdot \mid \operatorname{do}(X = x))$ is the law of $V$ under $M_{\operatorname{do}(X = x)}$.
 
-## Confounding in one line
+Intervention is surgery on the mechanism. It does not condition on $X = x$; it overwrites the process that produced $X$, cutting it from its former causes while leaving its effects to propagate.
 
-Take the graph $Z \to X$, $Z \to Y$, $X \to Y$, with $Z$ a common cause of treatment and recovery — say, illness severity, which makes a patient both more likely to be treated and less likely to recover. Conditioning gives
+## The rungs do not collapse
 
-$$P(Y \mid X = x) = \sum_z P(Y \mid X = x, Z = z)\, P(Z = z \mid X = x);$$
+**Proposition 1.** There exist two structural causal models over the same pair $(X, Y)$ with identical observational distributions but different interventional distributions. No functional of the observational law can therefore equal $P(Y \mid \operatorname{do}(X = x))$ in general: rung two is not determined by rung one.
 
-the truncated factorisation gives
+**Proof.** Fix the joint law on $\{0,1\}^2$ given by
+$$P(X{=}0,Y{=}0) = 0.4,\quad P(X{=}0,Y{=}1) = 0.1,\quad P(X{=}1,Y{=}0) = 0.2,\quad P(X{=}1,Y{=}1) = 0.3,$$
+so that $X \not\perp\!\!\!\perp Y$. Write $P(Y \mid X)$, $P(X \mid Y)$ for the conditionals and $P(X)$, $P(Y)$ for the marginals. Build two models, each reproducing this joint by construction.
 
-$$P\bigl(Y \mid \operatorname{do}(X = x)\bigr) = \sum_z P(Y \mid X = x, Z = z)\, P(Z = z).$$
+*Model $A$ (X causes Y).* Let $X := U_X$ with $U_X \sim P(X)$, and $Y := f(X, U_Y)$ realising $P(Y \mid X)$. The induced joint is $P(X)\,P(Y \mid X) = P_{X,Y}$. Deleting the first equation and setting $X := x$ leaves the second intact, so
+$$P^A(Y \mid \operatorname{do}(X = x)) = P(Y \mid X = x).$$
 
-The summands are identical. The weights are not: conditioning weights each stratum by $P(z \mid x)$, intervention by the marginal $P(z)$. When $Z$ is associated with $X$ — when sicker patients are the ones who get treated — those weights differ, and the two rungs disagree. The discrepancy *is* confounding; there is nothing more to it than the swap of $P(z \mid x)$ for $P(z)$.
+*Model $B$ (Y causes X).* Let $Y := U_Y$ with $U_Y \sim P(Y)$, and $X := g(Y, U_X)$ realising $P(X \mid Y)$. The induced joint is $P(Y)\,P(X \mid Y) = P_{X,Y}$, identical to $A$'s. Here $Y$ has no parents, so deleting the equation for $X$ leaves the law of $Y$ alone:
+$$P^B(Y \mid \operatorname{do}(X = x)) = P(Y).$$
 
-## The simulator
+The two joints agree, being two factorisations of one law. The interventional laws differ whenever $P(Y \mid X = x) \neq P(Y)$, which holds because $X \not\perp\!\!\!\perp Y$. With the numbers above, $P(Y \mid \operatorname{do}(X{=}1))$ is $(0.4, 0.6)$ under $A$ and $(0.6, 0.4)$ under $B$. The interventional law is not a function of the shared observational law, so no functional of the latter can express it. $\square$
 
-Forty lines of PyTorch make the disagreement concrete. We treat the structural assignments literally: each variable is a function of its parents plus fresh randomness, sampled in topological order. Intervention is implemented as exactly what the definition says — we stop calling `sample_X` and substitute a constant, leaving `sample_Z` and `sample_Y` alone.
+The construction is worth fixing in code, and the series will compute throughout.
 
 ```python
-import torch
-torch.manual_seed(0)
-N = 1_000_000
+import numpy as np
 
-def bernoulli(p):
-    return (torch.rand(N) < p).float()
+# A joint law P(X,Y) on {0,1}^2 with X not independent of Y.
+P  = np.array([[0.4, 0.1],     # [P(X=0,Y=0), P(X=0,Y=1)]
+               [0.2, 0.3]])    # [P(X=1,Y=0), P(X=1,Y=1)]
+PX = P.sum(axis=1)
+PY = P.sum(axis=0)
+P_Y_g_X = P / PX[:, None]      # P(Y|X)
+P_X_g_Y = P / PY[None, :]      # P(X|Y)
 
-# SCM:  Z -> X,  Z -> Y,  X -> Y.  Z is the confounder.
-def sample_Z():
-    return bernoulli(0.5)
+# Model A : X := U_X , Y := f(X,U_Y)   (X causes Y)
+jointA = PX[:, None] * P_Y_g_X         # = P
+doA    = P_Y_g_X                       # P(Y | do(X=x)) = P(Y|X=x)
 
-def sample_X(Z):                       # X tracks Z: treatment follows severity
-    return bernoulli(torch.where(Z == 1, 0.9, 0.1))
+# Model B : Y := U_Y , X := g(Y,U_X)   (Y causes X)
+jointB = PY[None, :] * P_X_g_Y         # = P
+doB    = np.repeat(PY[None, :], 2, 0)  # P(Y | do(X=x)) = P(Y)
 
-def sample_Y(X, Z):                    # logit = -1 - X + 3 Z : X hurts, Z helps more
-    return bernoulli(torch.sigmoid(-1.0 - 1.0 * X + 3.0 * Z))
-
-# Rung 1 - observe.  Condition by filtering rows.
-Z = sample_Z(); X = sample_X(Z); Y = sample_Y(X, Z)
-obs1, obs0 = Y[X == 1].mean(), Y[X == 0].mean()
-
-# Rung 2 - intervene.  Delete f_X, pin X by hand; Z keeps its own assignment.
-Z = sample_Z(); do1 = sample_Y(torch.ones(N),  Z).mean()
-Z = sample_Z(); do0 = sample_Y(torch.zeros(N), Z).mean()
-
-print(f"observe:    P(Y|X=1)={obs1:.3f}  P(Y|X=0)={obs0:.3f}  diff={obs1-obs0:+.3f}")
-print(f"intervene:  P(Y|do1)={do1:.3f}  P(Y|do0)={do0:.3f}  diff={do1-do0:+.3f}")
+print("same observational law :", np.allclose(jointA, jointB))
+print("P(Y | do X=1) under A  :", doA[1])
+print("P(Y | do X=1) under B  :", doB[1])
 ```
 
-The output:
-
 ```
-observe:    P(Y|X=1)=0.669  P(Y|X=0)=0.330  diff=+0.339
-intervene:  P(Y|do1)=0.424  P(Y|do0)=0.575  diff=-0.151
+same observational law : True
+P(Y | do X=1) under A  : [0.4 0.6]
+P(Y | do X=1) under B  : [0.6 0.4]
 ```
 
-Observing $X = 1$ is associated with a recovery rate higher by $0.34$. Setting $X = 1$ lowers it by $0.15$. The treatment helps in the data and harms in reality, and the sign flips because the treated are mostly the severe cases ($Z = 1$): conditioning reads off their high baseline recovery and credits it to the treatment, while intervention holds the mix of severities fixed and exposes the treatment's own negative effect. The two columns of numbers come from the same simulator, differing only in whether `sample_X` was allowed to run.
+The models are observationally indistinguishable. No sample from either could tell them apart, since they agree on the one thing a sample sees. They disagree on what an intervention does, by a flip of the distribution. This is the sense in which statistics, confined to rung one, cannot say "because": the thing it would need is absent from its object of study.
 
-A supervised model fit to this data would learn the first row exactly and the second row not at all — not because it was trained badly, but because the second row is not a function of $P(X, Y, Z)$. It is a function of the assignments, and those were never in the data to begin with.
+## How thin is the agreement?
 
-## What this costs us later
+Proposition 1 gives one pair of models that agree below and split above. One might hope this is pathological and that for typical mechanisms the observational law fixes the interventional one. It does not. Bareinboim, Correa, Ibeling and Icard (2022) formalised the hierarchy and proved a *Causal Hierarchy Theorem*: under a natural measure over structural models, the set on which a lower rung determines the next has measure zero. The layers collapse only on a thin exceptional set. I will not reproduce the statement, which needs the apparatus of their paper; the content is that Proposition 1 is the rule, and the work of climbing the ladder is supplying the missing structure.
 
-The adjustment formula above looks like an escape: measure $Z$, average over it, recover the interventional answer from observational data. It works here because the graph was handed to us and $Z$ was a single observed bit. Both gifts vanish in the settings this series is aimed at. When $X$ is an image or a sentence there is no `sample_X` to write down by hand; we will have to *learn* it (post 3). When the confounder is unobserved, the formula is not merely hard to evaluate — the interventional quantity need not be identifiable from the data at all (post 6). And the variable we most want to intervene on in the fairness setting — a protected attribute — turns out to resist the surgery we just performed so casually, for reasons that are as much conceptual as technical.
+One principle says where to look.
 
-Next: fairness as a statement on the third rung, and the first case where conditioning and intervening give not just different numbers but different verdicts about whether a model is allowed to do what it does.
+**Reichenbach's Common Cause Principle.** If $X$ and $Y$ are statistically dependent, then $X$ causes $Y$, or $Y$ causes $X$, or some $Z$ is a common cause of both with $X \perp\!\!\!\perp Y \mid Z$. No correlation without causation.
+
+This is a postulate about the world, not a theorem, and one can argue with it. But it is the hinge: it says the rung-one quantity, dependence, always has a rung-two explanation of one of three shapes. The screening-off clause — dependence vanishing once the common cause is fixed — is the seed of d-separation, which makes the link between graphical structure and conditional independence exact. That is the next post: structural causal models in full, the graphs that encode them, and the theorem that turns "the flow of association" from a metaphor into something one can prove.
