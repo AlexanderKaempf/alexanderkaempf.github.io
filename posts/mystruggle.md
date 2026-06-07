@@ -1,6 +1,6 @@
 ---
 title: Mein Krampf
-published_date: 2025-10-02 02:01:57 +0000
+published_date: 2026-06-07 23:59:57 +0000
 description: Das Leben ist eben kein Zuckerschleckchen
 tags:
   - philosophy
