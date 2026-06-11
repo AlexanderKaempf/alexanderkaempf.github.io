@@ -8,7 +8,7 @@ data:
 ---
 
 <section class="intro">
-  <img class="portrait" src="/assets/img/alex.svg" alt="Portrait of Alexander Kaempf" width="168" height="168">
+  <img class="portrait" src="/assets/img/alex2.svg" alt="Portrait of Alexander Kaempf" width="168" height="168">
   <div class="intro-text">
     <!-- <p class="eyebrow">Mathematician</p> -->
     <h1>Alexander Kaempf</h1>
