@@ -1,7 +1,6 @@
 ---
 title: Causality 1 - The Ladder of Causation
-published_date: 2026-06-07 12:00:00 +0000
-description: Why the founders of statistics built a science that could not say "because", and the hierarchy of questions that repairs the omission.
+published_date: 2026-03-04 12:00:00 +0000
 tags:
   - causality
   - probability-theory
@@ -12,11 +11,11 @@ data:
   alt_url: /de/posts/kausalitaet-1/
 ---
 
-This is the first post in a series on causal inference, built as the foundation for a later series on causal methods in machine learning. The only prerequisite is measure-theoretic probability; the graph theory is developed where it is needed. The motivation and the historical thread come from Pearl and Mackenzie's *The Book of Why*; the definitions and theorems from Pearl's *Causality: Models, Reasoning, and Inference*. The popular book argues by anecdote, which is its charm and its limit. The aim here is to keep the argument and prove what can be proved.
+This is the first post in a series on causal inference, built as the foundation for a later series on causal methods in machine learning. The only prerequisite is measure-theoretic probability; the graph theory is developed where it is needed. The motivation comes from Pearl and Mackenzie's *The Book of Why*, the definitions and theorems from Pearl's *Causality: Models, Reasoning, and Inference*. The popular book argues largely by anecdote, which makes for good reading, especially for a non-technical audience but is also limiting for obvious reasons. The aim here is to keep the rough structure of the book whilst providing the mathematical rigor/details.
 
-## A science built to avoid a word
+## Short History of Causality Theory
 
-Galton, studying heredity in the 1880s, found that the sons of tall fathers were tall but closer to average, and called it regression toward the mean. The effect is a property of any imperfectly correlated pair and says nothing about heredity pulling anyone toward mediocrity, though he first thought it did. His student Karl Pearson drew the harder conclusion: that the entire content of a relationship is its correlation, and that "cause" is a metaphysical relic the grown-up sciences should drop. Statistics was built on this refusal. The causal revolution is the claim that the refusal was an error — that there are well-posed questions no functional of the observational distribution can answer. The rest of this post makes the claim exact and proves its smallest instance.
+Galton, studying heredity in the 1880s, found that the sons of tall fathers were tall but closer to average, and called it regression toward the mean. The effect is a property of any imperfectly correlated pair and says nothing about heredity pulling anyone toward mediocrity, though he first thought it did. His student Karl Pearson drew the harder conclusion: that the entire content of a relationship is its correlation, and that "cause" is a metaphysical relic the "grown-up" sciences should drop. Statistics was built on this refusal. The causal revolution is the claim that the refusal was an error — that there are well-posed questions no functional of the observational distribution can answer. 
 
 ## What association is
 
@@ -115,6 +114,6 @@ Proposition 1 gives one pair of models that agree below and split above. One mig
 
 One principle says where to look.
 
-**Reichenbach's Common Cause Principle.** If $X$ and $Y$ are statistically dependent, then $X$ causes $Y$, or $Y$ causes $X$, or some $Z$ is a common cause of both with $X \perp\!\!\!\perp Y \mid Z$. No correlation without causation.
+**Reichenbach's Common Cause Principle.** If $X$ and $Y$ are statistically dependent, then $X$ causes $Y$, or $Y$ causes $X$, or some $Z$ is a common cause of both with $X \perp\!\!\!\perp Y \mid Z$. 
 
-This is a postulate about the world, not a theorem, and one can argue with it. But it is the hinge: it says the rung-one quantity, dependence, always has a rung-two explanation of one of three shapes. The screening-off clause — dependence vanishing once the common cause is fixed — is the seed of d-separation, which makes the link between graphical structure and conditional independence exact. That is the next post: structural causal models in full, the graphs that encode them, and the theorem that turns "the flow of association" from a metaphor into something one can prove.
+This is a postulate about the world, not a theorem, and one can argue with it. But it is the hinge to Causality Theory: it says the rung-one quantity, dependence, always has a rung-two explanation of one of three shapes. The screening-off clause — dependence vanishing once the common cause is fixed — is the seed of d-separation, which makes the link between graphical structure and conditional independence exact. That is the next post: structural causal models in full and the graphs that encode them.

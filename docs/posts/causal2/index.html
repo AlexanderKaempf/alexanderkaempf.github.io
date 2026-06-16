@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en">
+  <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$',  right: '$',  display: false}
+      ],
+      throwOnError: false
+    });"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Causality 2 - Structural Causal Models and d-separation · Alexander Kaempf</title>
+    <meta name="description" content="Mathematician — research, notes, and writing on analysis and number theory.">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="Alexander Kaempf" href="/rss.xml">
+    <!-- MathJax: typeset LaTeX in posts, e.g. \( e^{i\pi}+1=0 \) -->
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+        options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="bar">
+        <a class="brand" href="/">Alexander Kaempf</a>
+        <nav class="menu"><a href="/" >Home</a>
+          <a href="/about/" >About</a>
+          <a href="/posts/" class="active">Posts</a>
+          <a href="/contact/" >Contact</a>
+          <a class="lang" href="/de/posts/kausalitaet-2/" hreflang="de" title="Auf Deutsch lesen">DE</a></nav>
+      </div>
+    </header>
+
+    <main class="content"><article class="post">
+        <header class="post-head">
+          <h1>Causality 2 - Structural Causal Models and d-separation</h1>
+          <p class="post-meta">
+            <time datetime="2026-03-10">March 10, 2026</time><span class="tag-list"><a class="tag" href="/tags/#causality">causality</a><a class="tag" href="/tags/#probability-theory">probability-theory</a><a class="tag" href="/tags/#exposition">exposition</a></span></p>
+        </header>
+        <p>The last post argued that a single probability measure underdetermines the answers we want, and left the interventional rung as a promissory note. Paying it requires an object richer than a distribution: something that says not only how the variables co-vary, but which mechanism produced which. That object is the structural causal model.</p>
+<h2>The model</h2>
+<p>A <em>structural causal model</em> is a quadruple $M = (U, V, F, P)$ where</p>
+<ul>
+<li>$U = {U_1, \dots, U_m}$ are the <em>exogenous</em> variables, fixed by influences outside the model;</li>
+<li>$V = {V_1, \dots, V_n}$ are the <em>endogenous</em> variables, those the model claims to explain;</li>
+<li>$F = {f_1, \dots, f_n}$ assigns to each endogenous variable a function $V_i = f_i(\mathrm{Pa}_i, U_i)$, with $\mathrm{Pa}_i \subseteq V \setminus {V_i}$ its endogenous <em>parents</em> and $U_i \subseteq U$ its exogenous inputs;</li>
+<li>$P$ is a probability measure on the range of $U$.</li>
+</ul>
+<p>The functions carry the asymmetry that a joint distribution cannot. Reading $V_i = f_i(\mathrm{Pa}_i, U_i)$ as an <em>assignment</em> rather than an equation is the whole point: the left side is computed from the right, and never the reverse. A linear regression of $Y$ on $X$ produces a coefficient that can be solved for $X$ just as well as for $Y$; the structural equation $Y := \beta X + U_Y$ cannot be turned around, because turning it around would assert a different mechanism.</p>
+<p>Each model induces a directed graph $G(M)$: draw an arrow into $V_i$ from every variable in $\mathrm{Pa}_i$. We assume throughout that $G(M)$ is acyclic, which is the formal content of the word <em>recursive</em>. The exogenous variables are usually left off the drawing unless two endogenous variables share one, in which case the shared cause is what a dashed bidirected edge stands in for.</p>
+<p>Acyclicity buys the first result, the one that lets us speak of "the distribution of a model" at all.</p>
+<p><strong>Proposition 1.</strong> <em>In a recursive SCM, every endogenous variable is a function of the exogenous variables alone. Consequently $M$ together with $P$ induces a unique probability measure $P_M$ on $V$.</em></p>
+<p><em>Proof.</em> Acyclicity gives a topological order $V_{(1)}, \dots, V_{(n)}$ in which every parent precedes its child. Argue by induction along it. The first variable has no endogenous parents, so $V_{(1)} = f_{(1)}(U_{(1)})$ is already a function of $U$. Suppose $V_{(1)}, \dots, V_{(k-1)}$ are each functions of $U$. The parents of $V_{(k)}$ sit among them, so substituting their expressions into $f_{(k)}$ writes $V_{(k)}$ as a function of $U$. The map $g : \mathrm{dom}(U) \to \mathrm{dom}(V)$ assembled from these functions is measurable, and $P_M := g_* P$, the pushforward, is the claimed measure. Uniqueness is immediate, since $g$ is determined by $F$. $\square$</p>
+<p>The construction matters more than the statement. It says a causal model is a deterministic machine wrapped in a single source of randomness — the exogenous draw $U \sim P$ — and the observed distribution is what you get by looking only at the machine's endogenous outputs. Every counterfactual question we reach later is a question about running the same machine on the same $U$ with one function overwritten.</p>
+<h2>Independence without numbers</h2>
+<p>When the exogenous variables are jointly independent the model is called <em>Markovian</em>, and the induced distribution inherits a rigid factorization.</p>
+<p><strong>Proposition 2 (Causal Markov factorization).</strong> <em>For a Markovian model with graph $G$,</em></p>
+<p>$$
+P_M(v_1, \dots, v_n) = \prod_{i=1}^{n} P\bigl(v_i \mid \mathrm{pa}_i\bigr),
+$$</p>
+<p><em>where $\mathrm{pa}_i$ denotes the values the parents take in the argument $v$.</em></p>
+<p><em>Proof sketch.</em> Each $U_i$ feeds exactly one mechanism and the $U_i$ are independent, so conditioning a variable on its parents screens off everything non-descendant: the residual noise $U_i$ is the only thing left, and it is independent of the rest. Expanding $P_M$ in the topological order by the chain rule and dropping every non-parent from each conditioning set on these grounds yields the product. The dropped terms are exactly the ones the graph licenses dropping. $\square$</p>
+<p>The factorization is the bridge between mechanism and probability, but it still presents independence as something to be computed. The contribution of graph theory is that independence can instead be <em>seen</em>. To see it we need to say when a path transmits association and when it does not.</p>
+<p>Fix a graph $G$ and consider an undirected path — a sequence of distinct nodes joined by edges, arrows pointing either way along it. Relative to a conditioning set $Z$, a node on the path is one of three kinds:</p>
+<ul>
+<li>a <em>chain</em> $a \to m \to b$ or a <em>fork</em> $a \leftarrow m \to b$, where $m$ is a non-collider;</li>
+<li>a <em>collider</em> $a \to m \leftarrow b$, where two arrowheads meet.</li>
+</ul>
+<p>The path is <em>blocked</em> by $Z$ when at least one of the following holds: some non-collider on it lies in $Z$, or some collider on it lies outside $Z$ and has no descendant in $Z$. Otherwise the path is <em>open</em>.</p>
+<p>Two sets $X$ and $Y$ are <em>d-separated</em> by $Z$, written $(X \perp\mkern-10mu\perp Y \mid Z)_G$, when $Z$ blocks every path between a node of $X$ and a node of $Y$. The symbol $\perp\mkern-10mu\perp$ will also denote ordinary conditional independence in a distribution; which one is meant is fixed by whether a graph subscript is present.</p>
+<p>The collider clause is the rule people find counterintuitive, and it is worth stating its content in plain terms before proving anything: conditioning on a common effect of two causes makes those causes dependent, even when they began independent. The graph encodes this by leaving a collider path <em>open</em> precisely when its middle node is observed.</p>
+<h2>Soundness</h2>
+<p><strong>Theorem (d-separation soundness).</strong> <em>Let $P$ be Markov relative to $G$. If $(X \perp\mkern-10mu\perp Y \mid Z)_G$ then $X$ and $Y$ are conditionally independent given $Z$ under $P$.</em></p>
+<p>The general statement is Verma and Pearl's; the proof reduces to the three elementary configurations on a single intermediate node, from which the path version follows by composing blocks. Take the three configurations in turn, each on variables $A, B$ with one middle node $M$ and independent exogenous noise.</p>
+<p><em>Chain $A \to M \to B$.</em> Here $B = f_B(M, U_B)$ and $M = f_M(A, U_M)$, with $U_B$ independent of $(A, U_M)$. Conditioning on $M$ fixes the only argument of $f_B$ that depends on $A$; what remains in $B$ is the fresh noise $U_B$, independent of $A$. Hence $A \perp\mkern-10mu\perp B \mid M$. Conditioning on $M$ blocks the chain, and the algebra agrees.</p>
+<p><em>Fork $A \leftarrow M \to B$.</em> Now $A = f_A(M, U_A)$ and $B = f_B(M, U_B)$ with $U_A, U_B, M$ mutually independent in the relevant sense. Given $M$, the two outputs are functions of disjoint independent noises, so they are conditionally independent. The common cause, once held fixed, has nothing left to share.</p>
+<p><em>Collider $A \to M \leftarrow B$.</em> With $A$ and $B$ independent and $M = f_M(A, B, U_M)$, the pair is marginally independent — no path is open when $M$ is unobserved. Condition on $M$, however, and $A$ and $B$ are tied by the constraint $f_M(A, B, U_M) = m$: learning one narrows the other. This is the open collider.</p>
+<p>Composing these along a path, an open path requires every non-collider off $Z$ and every collider on $Z$ (or with a descendant in $Z$), which is exactly the negation of blocking. A blocked path therefore contributes no dependence, and d-separation of all paths gives the global independence. $\square$</p>
+<p>The converse fails in general — a distribution can carry an independence the graph does not show, through a numerical coincidence among the structural functions. Models in which <em>every</em> independence is graphical are called <em>faithful</em>, and faithfulness is an assumption about the world, not a theorem about graphs. The non-collapse example from the first post was an instance of two graphs agreeing on observational independences while disagreeing on interventions; faithfulness is the dual concern, where one graph's distribution hides an independence it structurally should not have. Soundness needs neither assumption. That is why it is the workhorse: it lets us certify an independence from the picture alone, with no access to the numbers.</p>
+<h2>Explaining away, in numbers</h2>
+<p>A minimal collider makes the abstract clause concrete. Let $A$ and $B$ be independent fair coins, and let $C = A \lor B$ be their logical or — an alarm that sounds if either of two independent faults occurs. Marginally,</p>
+<p>$$
+P(A=1) = P(B=1) = \tfrac{1}{2}, \qquad P(A=1, B=1) = \tfrac{1}{4} = P(A=1),P(B=1),
+$$</p>
+<p>so $A$ and $B$ are independent, as the unconditioned collider predicts. Condition on the alarm, $C = 1$. Three of the four equally likely fault combinations survive, and a short computation gives</p>
+<p>$$
+P(A=1 \mid C=1) = \tfrac{2}{3}, \qquad P(A=1 \mid B=1,, C=1) = \tfrac{1}{2}.
+$$</p>
+<p>Learning that the second fault occurred drops the probability of the first from two-thirds back to one-half. The alarm made the faults dependent; observing one fault then explains the alarm and discounts the other. Nothing in the mechanism changed — $A$ and $B$ are generated by independent coins regardless — yet conditioning on their shared effect manufactured a correlation. A model that read association straight off the conditional distribution would report the two faults as linked and have no vocabulary for saying the link is an artifact of what was conditioned on.</p>
+<p>That artifact is the engine behind a long list of statistical traps, selection bias and Berkson's paradox among them, and every one of them is the same open collider seen from a different applied angle. The graph diagnoses it without a single number: a collider conditioned upon is a path left open.</p>
+<p>A distribution Markov to a graph thus comes with a catalogue of guaranteed independences, all readable by eye. What it does not yet come with is a way to compute the effect of <em>forcing</em> a variable to a value rather than observing it. That operation cuts arrows instead of reading them, and it is the subject of the next post.</p>
+
+      </article></main>
+
+    <footer class="site-footer">
+      <div class="bar">
+        <span>© Alexander Kaempf</span>
+        <span class="dim">Built with Cobalt.</span>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -13,7 +13,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Causality 1 - The Ladder of Causation · Alexander Kaempf</title>
-    <meta name="description" content="Why the founders of statistics built a science that could not say "because", and the hierarchy of questions that repairs the omission.">
+    <meta name="description" content="Mathematician — research, notes, and writing on analysis and number theory.">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="alternate" type="application/rss+xml" title="Alexander Kaempf" href="/rss.xml">
     <!-- MathJax: typeset LaTeX in posts, e.g. \( e^{i\pi}+1=0 \) -->
@@ -41,11 +41,11 @@
         <header class="post-head">
           <h1>Causality 1 - The Ladder of Causation</h1>
           <p class="post-meta">
-            <time datetime="2026-06-07">June 7, 2026</time><span class="tag-list"><a class="tag" href="/tags/#causality">causality</a><a class="tag" href="/tags/#probability-theory">probability-theory</a><a class="tag" href="/tags/#exposition">exposition</a></span></p>
+            <time datetime="2026-03-04">March 4, 2026</time><span class="tag-list"><a class="tag" href="/tags/#causality">causality</a><a class="tag" href="/tags/#probability-theory">probability-theory</a><a class="tag" href="/tags/#exposition">exposition</a></span></p>
         </header>
-        <p>This is the first post in a series on causal inference, built as the foundation for a later series on causal methods in machine learning. The only prerequisite is measure-theoretic probability; the graph theory is developed where it is needed. The motivation and the historical thread come from Pearl and Mackenzie's <em>The Book of Why</em>; the definitions and theorems from Pearl's <em>Causality: Models, Reasoning, and Inference</em>. The popular book argues by anecdote, which is its charm and its limit. The aim here is to keep the argument and prove what can be proved.</p>
-<h2>A science built to avoid a word</h2>
-<p>Galton, studying heredity in the 1880s, found that the sons of tall fathers were tall but closer to average, and called it regression toward the mean. The effect is a property of any imperfectly correlated pair and says nothing about heredity pulling anyone toward mediocrity, though he first thought it did. His student Karl Pearson drew the harder conclusion: that the entire content of a relationship is its correlation, and that "cause" is a metaphysical relic the grown-up sciences should drop. Statistics was built on this refusal. The causal revolution is the claim that the refusal was an error — that there are well-posed questions no functional of the observational distribution can answer. The rest of this post makes the claim exact and proves its smallest instance.</p>
+        <p>This is the first post in a series on causal inference, built as the foundation for a later series on causal methods in machine learning. The only prerequisite is measure-theoretic probability; the graph theory is developed where it is needed. The motivation comes from Pearl and Mackenzie's <em>The Book of Why</em>, the definitions and theorems from Pearl's <em>Causality: Models, Reasoning, and Inference</em>. The popular book argues largely by anecdote, which makes for good reading, especially for a non-technical audience but is also limiting for obvious reasons. The aim here is to keep the rough structure of the book whilst providing the mathematical rigor/details.</p>
+<h2>Short History of Causality Theory</h2>
+<p>Galton, studying heredity in the 1880s, found that the sons of tall fathers were tall but closer to average, and called it regression toward the mean. The effect is a property of any imperfectly correlated pair and says nothing about heredity pulling anyone toward mediocrity, though he first thought it did. His student Karl Pearson drew the harder conclusion: that the entire content of a relationship is its correlation, and that "cause" is a metaphysical relic the "grown-up" sciences should drop. Statistics was built on this refusal. The causal revolution is the claim that the refusal was an error — that there are well-posed questions no functional of the observational distribution can answer.</p>
 <h2>What association is</h2>
 <p>Fix a probability space $(\Omega, \mathcal{F}, P)$. Observable quantities are random variables on it; a finite collection $V = (V_1, \dots, V_n)$ valued in a product of standard Borel spaces has a joint law
 $$P_V := V_* P = P \circ V^{-1},$$
@@ -112,8 +112,8 @@ $$P^B(Y \mid \operatorname{do}(X = x)) = P(Y).$$</p>
 <h2>How thin is the agreement?</h2>
 <p>Proposition 1 gives one pair of models that agree below and split above. One might hope this is pathological and that for typical mechanisms the observational law fixes the interventional one. It does not. Bareinboim, Correa, Ibeling and Icard (2022) formalised the hierarchy and proved a <em>Causal Hierarchy Theorem</em>: under a natural measure over structural models, the set on which a lower rung determines the next has measure zero. The layers collapse only on a thin exceptional set. I will not reproduce the statement, which needs the apparatus of their paper; the content is that Proposition 1 is the rule, and the work of climbing the ladder is supplying the missing structure.</p>
 <p>One principle says where to look.</p>
-<p><strong>Reichenbach's Common Cause Principle.</strong> If $X$ and $Y$ are statistically dependent, then $X$ causes $Y$, or $Y$ causes $X$, or some $Z$ is a common cause of both with $X \perp!!!\perp Y \mid Z$. No correlation without causation.</p>
-<p>This is a postulate about the world, not a theorem, and one can argue with it. But it is the hinge: it says the rung-one quantity, dependence, always has a rung-two explanation of one of three shapes. The screening-off clause — dependence vanishing once the common cause is fixed — is the seed of d-separation, which makes the link between graphical structure and conditional independence exact. That is the next post: structural causal models in full, the graphs that encode them, and the theorem that turns "the flow of association" from a metaphor into something one can prove.</p>
+<p><strong>Reichenbach's Common Cause Principle.</strong> If $X$ and $Y$ are statistically dependent, then $X$ causes $Y$, or $Y$ causes $X$, or some $Z$ is a common cause of both with $X \perp!!!\perp Y \mid Z$.</p>
+<p>This is a postulate about the world, not a theorem, and one can argue with it. But it is the hinge to Causality Theory: it says the rung-one quantity, dependence, always has a rung-two explanation of one of three shapes. The screening-off clause — dependence vanishing once the common cause is fixed — is the seed of d-separation, which makes the link between graphical structure and conditional independence exact. That is the next post: structural causal models in full and the graphs that encode them.</p>
 
       </article></main>
 

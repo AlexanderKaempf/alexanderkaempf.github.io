@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="en">
+  <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$',  right: '$',  display: false}
+      ],
+      throwOnError: false
+    });"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Causality 3 - The do-operator and the Completeness of do-calculus · Alexander Kaempf</title>
+    <meta name="description" content="Mathematician — research, notes, and writing on analysis and number theory.">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="alternate" type="application/rss+xml" title="Alexander Kaempf" href="/rss.xml">
+    <!-- MathJax: typeset LaTeX in posts, e.g. \( e^{i\pi}+1=0 \) -->
+    <script>
+      window.MathJax = {
+        tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+        options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="bar">
+        <a class="brand" href="/">Alexander Kaempf</a>
+        <nav class="menu"><a href="/" >Home</a>
+          <a href="/about/" >About</a>
+          <a href="/posts/" class="active">Posts</a>
+          <a href="/contact/" >Contact</a>
+          <a class="lang" href="/de/posts/kausalitaet-3/" hreflang="de" title="Auf Deutsch lesen">DE</a></nav>
+      </div>
+    </header>
+
+    <main class="content"><article class="post">
+        <header class="post-head">
+          <h1>Causality 3 - The do-operator and the Completeness of do-calculus</h1>
+          <p class="post-meta">
+            <time datetime="2026-05-13">May 13, 2026</time><span class="tag-list"><a class="tag" href="/tags/#causality">causality</a><a class="tag" href="/tags/#probability-theory">probability-theory</a><a class="tag" href="/tags/#exposition">exposition</a></span></p>
+        </header>
+        <p>To observe $X = x$ is to restrict attention to the part of the world where that already held. To set $X = x$ is to reach in and make it hold, overriding whatever would have produced $X$ otherwise. The previous posts showed why these differ; this one defines the second operation and then proves the surprising fact that three rules exhaust it.</p>
+<h2>Surgery</h2>
+<p>The mechanism for $X$ in a structural model is the function $f_X(\mathrm{Pa}_X, U_X)$ that normally sets its value. An intervention discards that function and substitutes a constant.</p>
+<p><strong>Definition (intervention).</strong> <em>Given an SCM $M$ and a value $x$, the submodel $M_x$ is $M$ with $f_X$ replaced by the constant assignment $X := x$, all other functions unchanged. The interventional distribution is</em></p>
+<p>$$
+P\bigl(v \mid \operatorname{do}(X = x)\bigr) := P_{M_x}(v),
+$$</p>
+<p><em>the distribution induced by the submodel.</em></p>
+<p>Graphically the substitution deletes every arrow into $X$ — the variable no longer listens to its parents — and leaves the rest of the diagram intact. Write $G_{\overline{X}}$ for this mutilated graph. The deletion is the formal residue of the word <em>force</em>: a forced variable has no incoming mechanism left to respond to its old causes.</p>
+<p>The submodel is itself a Markovian SCM, so Proposition 2 of the previous post applies to it, and its factorization is the original product with one factor struck out.</p>
+<p><strong>Proposition 1 (truncated factorization).</strong> <em>For $v$ consistent with $X = x$,</em></p>
+<p>$$
+P\bigl(v \mid \operatorname{do}(X = x)\bigr) = \prod_{i \thinspace :\thinspace  V_i \neq X} P\bigl(v_i \mid \mathrm{pa}_i\bigr),
+$$</p>
+<p><em>and the probability is zero otherwise.</em></p>
+<p><em>Proof.</em> The submodel $M_x$ has the same graph as $M$ with the parents of $X$ removed, and the same conditional factors for every variable other than $X$, since their mechanisms are untouched. Its factor for $X$ is the point mass at $x$. Writing out the causal Markov factorization for $M_x$ and discarding the degenerate factor gives the product over $i$ with $V_i \neq X$. $\square$</p>
+<p>The formula is already a complete answer to the interventional question whenever every variable in the graph is observed: knowing the conditional factors $P(v_i \mid \mathrm{pa}_i)$, all of which are observational quantities, one simply omits the factor for $X$ and reads off the effect. The difficulty that motivates everything below is the case of <em>latent</em> variables, where some factors involve nodes we never measure. Then the truncated product is a formula in unobservable quantities, and the question becomes whether the effect can be re-expressed using only what the data supply.</p>
+<h2>Identifiability</h2>
+<p><strong>Definition (identifiability).</strong> <em>Let $G$ be a causal graph over observed variables $V$ and latent variables. The effect $P(y \mid \operatorname{do}(x))$ is</em> identifiable <em>from $G$ if it is uniquely determined by the observational distribution over $V$ — that is, any two models sharing the graph and the observed distribution agree on the effect.</em></p>
+<p>Identifiability is a property of the graph, not of any particular dataset. It asks whether the structure leaves enough constraints to pin the interventional quantity down from observation alone, or whether two models can match on everything observable and still disagree on the consequence of acting. The first post built exactly such a disagreeing pair for the bare two-node case; a richer graph may forbid the disagreement, and the question is how to tell.</p>
+<p>The tool that decides it operates by rewriting expressions that mix observation and action until, if possible, every $\operatorname{do}$ is eliminated. The rewriting is governed by three rules.</p>
+<h2>The three rules</h2>
+<p>Two further surgeries name the graphs the rules quantify over. Let $G_{\overline{X}}$ delete the arrows <em>into</em> $X$, as above, and let $G_{\underline{X}}$ delete the arrows <em>out of</em> $X$. These compose: $G_{\overline{X}\thinspace \underline{Z}}$ deletes arrows into $X$ and out of $Z$. Throughout, $X, Y, Z, W$ are disjoint node sets, and a graph subscript on $\perp\mkern-10mu\perp$ means d-separation in that mutilated graph.</p>
+<p><strong>Rule 1 (insertion and deletion of observations).</strong></p>
+<p>$$
+P\bigl(y \mid \operatorname{do}(x),\thinspace  z,\thinspace  w\bigr) = P\bigl(y \mid \operatorname{do}(x),\thinspace  w\bigr) \quad\text{if } (Y \perp\mkern-10mu\perp Z \mid X, W) \text{ in } G_{\overline{X}}.
+$$</p>
+<p>An observation that the post-intervention graph renders irrelevant to $Y$ may be dropped. This is nothing more than d-separation soundness applied inside the submodel.</p>
+<p><strong>Rule 2 (exchange of action and observation).</strong></p>
+<p>$$
+P\bigl(y \mid \operatorname{do}(x),\thinspace  \operatorname{do}(z),\thinspace  w\bigr) = P\bigl(y \mid \operatorname{do}(x),\thinspace  z,\thinspace  w\bigr) \quad\text{if } (Y \perp\mkern-10mu\perp Z \mid X, W) \text{ in } G_{\overline{X}\thinspace \underline{Z}}.
+$$</p>
+<p>Setting $Z$ and seeing $Z$ have the same effect on $Y$ when, after cutting $Z$'s outgoing arrows, no back-door path ties $Z$ to $Y$. The condition checks that $Z$'s only route to $Y$ was the directed one that an intervention and an observation share.</p>
+<p><strong>Rule 3 (insertion and deletion of actions).</strong></p>
+<p>$$
+P\bigl(y \mid \operatorname{do}(x),\thinspace  \operatorname{do}(z),\thinspace  w\bigr) = P\bigl(y \mid \operatorname{do}(x),\thinspace  w\bigr) \quad\text{if } (Y \perp\mkern-10mu\perp Z \mid X, W) \text{ in } G_{\overline{X}\thinspace \overline{Z(W)}},
+$$</p>
+<p><em>where $Z(W)$ is the set of $Z$-nodes that are not ancestors of any $W$-node in $G_{\overline{X}}$.</em></p>
+<p>An action with no remaining path to $Y$ changes nothing and may be removed. The ancestor caveat handles the case where conditioning on $W$ has opened a collider that an intervention on $Z$ would otherwise travel.</p>
+<p>Each rule is a corollary of d-separation soundness applied to a specific submodel; none is deep on its own. Their force is collective, and it took two decades to state precisely how much they collectively reach.</p>
+<h2>What the rules reach</h2>
+<p><strong>Theorem (soundness and completeness of do-calculus).</strong> <em>The three rules are sound: every equality they license holds in every model with the given graph. They are also complete: if $P(y \mid \operatorname{do}(x))$ is identifiable from $G$, then it can be reduced to a $\operatorname{do}$-free expression by a finite sequence of the three rules together with the standard probability axioms. If it is not identifiable, no such sequence exists.</em></p>
+<p>Soundness is the easy half, established rule by rule above. Completeness is the result of Shpitser and Pearl (2006) and, independently, Huang and Valtorta (2006). It says the rules are not merely a useful toolkit that might miss some identifiable effects; they are a decision procedure. The accompanying ID algorithm takes a graph and a target effect and returns either an estimand built from observational quantities or a certificate of non-identifiability — a subgraph called a <em>hedge</em> whose presence proves that two models can match observationally while disagreeing on the effect, exactly the construction from the first post lifted to arbitrary structure.</p>
+<p>The shape of the claim deserves emphasis, because completeness theorems are rarer than soundness theorems and easier to overstate. It does not say causal effects are always identifiable; most are not. It says the <em>boundary</em> between identifiable and not is drawn entirely by these three rules. Where they succeed the effect is recoverable from data; where they provably cannot, no method built on the same assumptions can do better, because there is genuinely nothing in the observational distribution that distinguishes the competing answers. The rules are the whole map, including its edge.</p>
+<h2>The rules at work</h2>
+<p>Take the smallest graph where the answer is not immediate and watch the machinery run. Suppose $X \to Y$, with an observed variable $Z$ that is a cause of both: $Z \to X$ and $Z \to Y$. Every variable here is observed, so Proposition 1 already settles it, but deriving the same result from the rules shows how a derivation proceeds when truncation alone would leave latent factors.</p>
+<p>Begin by conditioning on $Z$:</p>
+<p>$$
+P\bigl(y \mid \operatorname{do}(x)\bigr) = \sum_z P\bigl(y \mid \operatorname{do}(x),\thinspace  z\bigr)\thinspace  P\bigl(z \mid \operatorname{do}(x)\bigr).
+$$</p>
+<p>The second factor falls to Rule 3. In $G_{\overline{X}}$ the arrow $Z \to X$ is gone, so $Z$ — a non-descendant of $X$ — is d-separated from $X$, giving $(Z \perp\mkern-10mu\perp X)$ in $G_{\overline{X}}$ and hence</p>
+<p>$$
+P\bigl(z \mid \operatorname{do}(x)\bigr) = P(z).
+$$</p>
+<p>The first factor falls to Rule 2. In $G_{\underline{X}}$ the arrow $X \to Y$ is gone, so the only remaining route between $X$ and $Y$ runs $X \leftarrow Z \to Y$, which $Z$ blocks. Thus $(Y \perp\mkern-10mu\perp X \mid Z)$ in $G_{\underline{X}}$, and the action becomes an observation:</p>
+<p>$$
+P\bigl(y \mid \operatorname{do}(x),\thinspace  z\bigr) = P(y \mid x, z).
+$$</p>
+<p>Substituting both,</p>
+<p>$$
+P\bigl(y \mid \operatorname{do}(x)\bigr) = \sum_z P(y \mid x, z)\thinspace  P(z).
+$$</p>
+<p>Every term on the right is observational. The interventional quantity on the left, which no amount of staring at $P(y \mid x)$ would yield, has been written entirely in quantities a dataset reports. The pattern — condition on a well-chosen set, clear the residual actions with Rules 2 and 3 — recurs across the identifiable cases, and the set one conditions on is what the next post turns into a criterion. There it acquires a name, and a companion that survives even when the confounder is never measured.</p>
+
+      </article></main>
+
+    <footer class="site-footer">
+      <div class="bar">
+        <span>© Alexander Kaempf</span>
+        <span class="dim">Built with Cobalt.</span>
+      </div>
+    </footer>
+  </body>
+</html>

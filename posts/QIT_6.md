@@ -1,0 +1,74 @@
+---
+title: QIT 6 - The Circuit Model, Qubits, Gates, and Universality
+published_date: 2026-05-21 09:00:00 +0000
+tags:
+  - quantum-information
+  - quantum-computing
+  - exposition
+data:
+  lang: en
+  nav: posts
+  alt_url: /de/posts/schaltkreismodell/
+---
+
+The first five posts built the apparatus: states as density operators, evolution as channels, observation as measurement. Computation throws most of it away. It keeps a finite register, restricts evolution to the closed unitary case, and defers measurement to the very end, and from this deliberately spare setting it asks a question the earlier machinery never raised — what is efficiently computable. The spareness is the point. A model permissive enough to describe every open-system process is too permissive to prove anything sharp about cost.
+
+## The register
+
+**Definition 1.** *An $n$-qubit register has state space $\mathcal H_n = (\mathbb C^2)^{\otimes n} \cong \mathbb C^{2^n}$, with computational basis $\lbrace |x\rangle : x \in \lbrace 0,1\rbrace^n \rbrace$ indexed by bit strings.*
+
+The exponential dimension is the first and most quoted fact about the model: $n$ qubits carry a state vector in $2^n$ complex amplitudes, and nothing about classical bits does this. It is also the first trap. The amplitudes are not separately accessible — a measurement returns one bit string, not the vector — so the exponential lives in the description, not in what can be read out. Everything interesting about quantum computation is a statement about which transformations of those inaccessible amplitudes can be engineered, and how cheaply.
+
+**Definition 2.** *A gate on $\mathcal H_n$ is a unitary $U \in \mathrm U(2^n)$. A gate from a set $\mathcal G$ acting on a $k$-qubit subsystem is applied as $U \otimes I$ on the remaining factors. A circuit over $\mathcal G$ is a finite product of such gates.*
+
+Restricting evolution to unitaries rather than the channels of post 4 is a modelling choice, not a physical necessity: a channel is a unitary on a larger space (Stinespring), so the circuit model loses no generality as long as we are willing to enlarge the register. Ancillae, not exotic dynamics, absorb everything the channel formalism added.
+
+A short catalogue of the standard gates fixes notation. On one qubit, the Pauli operators $X, Y, Z$, the Hadamard $H$, which sends $|0\rangle \mapsto \tfrac{1}{\sqrt 2}(|0\rangle + |1\rangle)$ and $|1\rangle \mapsto \tfrac{1}{\sqrt 2}(|0\rangle - |1\rangle)$, the phase $S = \mathrm{diag}(1, i)$, and the $T$ gate $\mathrm{diag}(1, e^{i\pi/4})$. On two qubits, the controlled-NOT, which sends $|a\rangle|b\rangle$ to $|a\rangle|b \oplus a\rangle$. These recur because, as the next two results show, very small subsets of them already reach everything.
+
+## Two notions of "everything"
+
+There are two inequivalent things one might mean by a universal gate set, and conflating them is the usual source of confusion.
+
+**Definition 3.** *A set $\mathcal G$ is* exactly universal *if every $U \in \mathrm{SU}(2^n)$ is a finite product of gates from $\mathcal G$ acting on subsystems. It is* approximately universal *if the products are dense in $\mathrm{SU}(2^n)$, so every $U$ is approximated to arbitrary precision.*
+
+Exact universality is the stronger and, for a finite gate set, the impossible demand: a finite set generates a countable group, while $\mathrm{SU}(2^n)$ is uncountable, so no finite alphabet reaches every unitary on the nose. Exact universality is therefore a property of continuous families — the gate set is allowed to contain a knob.
+
+**Theorem 4 (universality of CNOT and single-qubit gates).** *The CNOT together with the full continuous family of single-qubit unitaries is exactly universal.*
+
+*Proof sketch.* Any $U \in \mathrm U(2^n)$ factors into a product of two-level unitaries, each acting nontrivially only on a two-dimensional subspace spanned by two basis vectors — the unitary analogue of clearing a matrix to diagonal form by Givens rotations. A two-level unitary on basis states $|s\rangle$ and $|t\rangle$ is realized by walking a Gray code from $s$ to $t$ with CNOTs, applying a single controlled single-qubit gate at the aligned position, and unwinding the code. Controlled single-qubit gates in turn reduce to CNOTs and single-qubit rotations through the standard $ABC$ decomposition. The construction is in Nielsen and Chuang; what matters here is only that it terminates in the two named resources. $\square$
+
+The theorem is satisfying and almost useless on its own, because "the full continuous family of single-qubit unitaries" is not something a physical device offers. A real machine has a handful of calibrated gates. The operative question is whether a *finite* set, necessarily only approximately universal, can stand in — and how much it costs to do so.
+
+## Clifford, and why it is not enough
+
+A natural finite candidate is the set that maps Pauli operators to Pauli operators.
+
+**Definition 5.** *The Pauli group $\mathcal P_n$ consists of tensor products of $\lbrace I, X, Y, Z \rbrace$ with global phase in $\lbrace \pm 1, \pm i \rbrace$. The Clifford group is its normalizer,*
+
+$$
+\mathcal C_n = \lbrace U \in \mathrm U(2^n) : U P U^\dagger \in \mathcal P_n \text{ for all } P \in \mathcal P_n \rbrace .
+$$
+
+**Proposition 6.** *$\mathcal C_n$ is generated, up to global phase, by $H$, $S$, and CNOT.*
+
+The Clifford gates are the ones every introduction reaches for, and a circuit built only from them looks every bit as quantum as any other — it produces entanglement, superposition, interference. It is therefore a genuine surprise that such circuits hide no computational power.
+
+**Theorem 7 (Gottesman–Knill).** *A circuit consisting only of Clifford gates, applied to a computational-basis input and followed by computational-basis measurement, can be simulated on a classical computer in time polynomial in $n$ and the number of gates.*
+
+The proof tracks not the exponential state vector but its stabilizer — the subgroup of Paulis fixing it — which Clifford gates update by conjugation, a polynomial-size bookkeeping. The moral is sharp: entanglement and superposition are necessary for quantum advantage but nowhere near sufficient. A Clifford circuit is a quantum-looking machine that a laptop keeps pace with. Whatever separates quantum from classical computation lives in the gates Clifford leaves out.
+
+## The missing gate, and the cost of discreteness
+
+Adjoining a single non-Clifford gate repairs the deficiency.
+
+**Theorem 8.** *The set $\lbrace H, S, \mathrm{CNOT}, T \rbrace$ is approximately universal: its circuits are dense in $\mathrm{SU}(2^n)$ up to global phase.*
+
+The $T$ gate, a rotation by $\pi/4$ about the $Z$ axis, is the entire difference between a classically tractable model and a universal one — a fact that returns with a vengeance in fault tolerance, where $T$ turns out to be the expensive gate to protect. Density secures that every target unitary can be approached. It says nothing about how many gates the approach demands, and a priori the count could grow as $1/\varepsilon$ for precision $\varepsilon$, which would make the discreteness fatal. It does not.
+
+**Theorem 9 (Solovay–Kitaev).** *Let $\mathcal G \subset \mathrm{SU}(d)$ be finite, closed under inverses, and generate a dense subgroup. There is a constant $c$ such that every $U \in \mathrm{SU}(d)$ can be approximated to operator-norm distance $\varepsilon$ by a product of $O\left(\log^{c}(1/\varepsilon)\right)$ gates from $\mathcal G$, and the product is found by an efficient algorithm.*
+
+The exponent $c$ is a small constant — under four in the original argument, pushed toward one by later work. The content is that precision is cheap: buying another decimal place of accuracy costs a polylogarithmic, not polynomial, number of additional gates. A finite, physically calibrated alphabet therefore approximates the continuous family of Theorem 4 with overhead that vanishes against any polynomial algorithm running on top of it.
+
+That is the resolution of the tension this post opened with. The exact-universality theorem promised that CNOTs and arbitrary single-qubit rotations suffice; the impossibility of a finite exact set threatened to make the promise unattainable on real hardware; Solovay–Kitaev restores it by showing the discrete approximation is efficient. The same discreteness that looked like a defect is, viewed from post 11, a prerequisite: a continuum of gates could not be error-corrected, because errors could accumulate continuously, whereas a finite set admits the digitization that fault tolerance exploits.
+
+A circuit, then, is a word over a four-letter alphabet, and any unitary one cares to perform is such a word of manageable length. What no result so far provides is a reason to write any particular word — a problem on which these circuits beat the classical competition. That is the next post.
