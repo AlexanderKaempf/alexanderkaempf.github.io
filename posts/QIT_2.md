@@ -1,7 +1,6 @@
 ---
 title: QIT 2 - Composite Systems, Partial Trace
 published_date: 2025-10-09 14:22:03 +0000
-description: Mixed states appear when "joining" two states
 tags:
   - quantum-information
   - density-matrices

@@ -1,7 +1,6 @@
 ---
 title: QIT 1 - Density Matrices
 published_date: 2025-10-02 02:01:57 +0000
-description: A better notion of a quantum state than the wave function.
 tags:
   - quantum-information
   - density-matrices

@@ -1,7 +1,6 @@
 ---
 title: QIT 3 - Entanglement and the Schmidt Decomposition
 published_date: 2025-11-16 18:01:55 +0000
-description: A canonical form for bipartite pure states that makes entanglement immediately visible.
 tags:
   - quantum-information
   - entanglement
