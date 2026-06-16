@@ -1,5 +1,5 @@
 ---
-title: QIT 7 - Quantum Algorithms, Interference Put to Work
+title: QIT 7 - Quantum Algorithms
 published_date: 2026-06-12 09:00:00 +0000
 tags:
   - quantum-information
